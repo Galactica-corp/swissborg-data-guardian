@@ -40,12 +40,12 @@ export const Button = <E extends ElementType = "button">(
         "shadow-xs relative inline-flex cursor-pointer select-none justify-center rounded-lg px-[18px] py-2 text-center font-medium transition-colors",
         (isLoading || disabled) && "pointer-events-none",
         theme === "jaffa" &&
-          "bg-jaffa text-white hover:bg-jaffa hover:brightness-110 focus:bg-jaffa focus:brightness-90 active:brightness-90",
-        theme === "jaffa" && disabled && "bg-jaffa/50",
+          "bg-caribbeanGreen hover:bg-caribbeanGreen focus:bg-caribbeanGreen text-white hover:brightness-110 focus:brightness-90 active:brightness-90",
+        theme === "jaffa" && disabled && "bg-caribbeanGreen/50",
 
         theme === "white" &&
-          "bg-white text-jaffa inner-border inner-border-jaffa/50 hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
-        theme === "white" && disabled && "text-jaffa",
+          "inner-border-jaffa/50 bg-white text-caribbeanGreen inner-border hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
+        theme === "white" && disabled && "text-caribbeanGreen",
 
         theme === "oxfordBlue" &&
           "bg-oxfordBlue text-white hover:brightness-90 active:brightness-105",
@@ -58,7 +58,7 @@ export const Button = <E extends ElementType = "button">(
           <Spinner
             className={twMerge(
               "size-4",
-              theme === "jaffa" && "stroke-white/60 text-jaffa/60"
+              theme === "jaffa" && "stroke-white/60 text-caribbeanGreen/60"
             )}
           />
         </span>

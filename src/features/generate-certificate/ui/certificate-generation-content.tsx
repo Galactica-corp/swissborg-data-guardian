@@ -85,7 +85,7 @@ export const CertificateGenerationContent = ({
 
       <main
         className={twMerge(
-          "relative mt-5 overflow-hidden rounded-xl border-2 border-jaffa p-5",
+          "border-jaffa relative mt-5 overflow-hidden rounded-xl border-2 p-5",
           mutation.isPending && "border-jaffa/30"
         )}
       >
@@ -118,7 +118,7 @@ export const CertificateGenerationContent = ({
           {modalItems.map((item) => {
             return (
               <li className="flex gap-x-3" key={item.iconName}>
-                <Icon className="text-jaffa" name={item.iconName} />
+                <Icon className="text-caribbeanGreen" name={item.iconName} />
                 <span className="font-light leading-6">{item.text}</span>
               </li>
             );

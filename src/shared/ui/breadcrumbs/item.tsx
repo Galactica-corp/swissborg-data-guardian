@@ -17,7 +17,7 @@ export const Item = ({
     <li
       className={twMerge(
         "flex items-center text-sm font-medium text-fiord",
-        isActive && "pointer-events-none font-semibold text-jaffa",
+        isActive && "pointer-events-none font-semibold text-caribbeanGreen",
         className
       )}
     >

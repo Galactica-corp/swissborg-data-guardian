@@ -23,7 +23,7 @@ export const Spinner = ({ className, theme = "jaffa" }: Props & ClassName) => {
       animate={animate}
       className={twMerge(
         "size-12",
-        theme === "jaffa" && "stroke-athensGray text-jaffa",
+        theme === "jaffa" && "stroke-athensGray text-caribbeanGreen",
         className
       )}
       fill="none"
