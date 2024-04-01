@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import { CertificateCard } from "entities/certificate";
-import { Avatar } from "entities/provider/ui/avatar";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
 
@@ -11,25 +9,18 @@ export const GenerationSuccessContent = () => {
   return (
     <>
       <header className="mb-5 flex flex-col items-center justify-center">
-        <Icon className="h-6 w-9" name="occam" />
+        <Icon className="h-6 w-9" name="userCircle" />
         <h3 className="mt-4 text-center text-lg font-medium">
-          The X.com (Twitter) Certificate was successfully generated
+          Your KYC Certificate for Galactica.com was successfully generated
         </h3>
       </header>
-
-      <CertificateCard
-        avatar={<Avatar onlyImage provider="twitter" />}
-        className="h-[186px] border-0 bg-gradient-to-tr from-[#5D5D5D] to-[#1B1B1B]"
-        issueDate="01/24"
-        title="X.com (Twitter) Certificate"
-      />
-
+      SuccessContent
       <footer className="mt-5 flex flex-col gap-2">
         {isDownloaded ? (
           <>
             <Button className="flex h-11 items-center justify-center gap-1 text-base font-medium ">
               <Icon
-                name="checkCircle"
+                name="userCircle"
                 svgClassName="stroke-current text-white/50"
               />
               Certificate downloaded
@@ -38,7 +29,7 @@ export const GenerationSuccessContent = () => {
               className="flex h-11 items-center justify-center gap-1 text-base font-medium"
               theme="white"
             >
-              Back to Home page
+              Upload to Wallet
             </Button>
           </>
         ) : (
@@ -48,7 +39,7 @@ export const GenerationSuccessContent = () => {
               setIsDownloaded(true);
             }}
           >
-            <Icon name="fileDownload" />
+            <Icon name="userCircle" />
             Download{" "}
             <span className="font-semibold text-white/50">[24.10.24]</span>
           </Button>

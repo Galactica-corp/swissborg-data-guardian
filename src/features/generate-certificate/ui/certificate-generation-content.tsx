@@ -9,36 +9,8 @@ import { Spinner } from "shared/ui/spinner";
 
 const modalItems: { iconName: IconName; text: string }[] = [
   {
-    iconName: "checkCircle",
-    text: "Created 01 March 2003",
-  },
-  {
     iconName: "userCircle",
     text: "21 age",
-  },
-  {
-    iconName: "markerPin",
-    text: "Tokyo (Japan)",
-  },
-  {
-    iconName: "checkVerified",
-    text: "Tokyo (Japan)",
-  },
-  {
-    iconName: "users",
-    text: "15,294 Followers",
-  },
-  {
-    iconName: "smile",
-    text: "1,295 Friends",
-  },
-  {
-    iconName: "heart",
-    text: "1,390,042 Likes",
-  },
-  {
-    iconName: "fileHeart",
-    text: "1,051 Posts",
   },
 ];
 
@@ -53,22 +25,11 @@ export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
 }: Props) => {
+  // метод будет другой апи, по идее то же.
   const mutation = useCreateTwitterZkCertificateMutation();
 
   const handleClick = () => {
-    mutation.mutate(
-      {
-        in: {
-          encryptionPubKey,
-          holderCommitment,
-        },
-      },
-      {
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      }
-    );
+    console.log(encryptionPubKey, holderCommitment);
 
     onNextStep();
   };
@@ -76,17 +37,17 @@ export const CertificateGenerationContent = ({
   return (
     <>
       <header className="flex flex-col items-center justify-center">
-        <Icon className="h-6 w-9" name="occam" />
-        <h3 className="mt-4 text-lg font-medium">Certificate generating</h3>
+        <Icon className="h-6 w-9" name="userCircle" />
+        <h3 className="mt-4 text-lg font-medium">Preparing your zkKYC</h3>
         <p className="mt-1 text-sm font-light leading-5 text-fiord">
-          You generate a certificate for X.com (Twitter)
+          Using KYC data provided from Swissborg
         </p>
       </header>
 
       <main
         className={twMerge(
-          "border-jaffa relative mt-5 overflow-hidden rounded-xl border-2 p-5",
-          mutation.isPending && "border-jaffa/30"
+          "relative mt-5 overflow-hidden rounded-xl border-2 border-caribbeanGreen p-5",
+          mutation.isPending && "border-caribbeanGreen/30"
         )}
       >
         <AnimatePresence>
@@ -108,7 +69,7 @@ export const CertificateGenerationContent = ({
           <div>
             <h4 className="font-medium leading-6">Standard Certificate</h4>
             <p className="mt-0.5 font-light">
-              The certificate will contain all available data
+              The certificate will contain the following fields
             </p>
           </div>
           <Checkbox defaultChecked />

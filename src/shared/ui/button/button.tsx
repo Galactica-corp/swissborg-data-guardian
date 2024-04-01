@@ -6,7 +6,7 @@ import { ClassName, PolymorphicProps } from "shared/types";
 
 import { Spinner } from "../spinner";
 
-type Theme = "jaffa" | "oxfordBlue" | "white";
+type Theme = "caribbeanGreen" | "white";
 
 type Props = {
   disabled?: boolean;
@@ -23,7 +23,7 @@ export const Button = <E extends ElementType = "button">(
     className,
     disabled = false,
     isLoading = false,
-    theme = "jaffa",
+    theme = "caribbeanGreen",
     ...restProps
   } = props;
 
@@ -39,17 +39,14 @@ export const Button = <E extends ElementType = "button">(
       className={twMerge(
         "shadow-xs relative inline-flex cursor-pointer select-none justify-center rounded-lg px-[18px] py-2 text-center font-medium transition-colors",
         (isLoading || disabled) && "pointer-events-none",
-        theme === "jaffa" &&
-          "bg-caribbeanGreen hover:bg-caribbeanGreen focus:bg-caribbeanGreen text-white hover:brightness-110 focus:brightness-90 active:brightness-90",
-        theme === "jaffa" && disabled && "bg-caribbeanGreen/50",
+        theme === "caribbeanGreen" &&
+          "bg-caribbeanGreen text-white hover:bg-caribbeanGreen hover:brightness-110 focus:bg-caribbeanGreen focus:brightness-90 active:brightness-90",
+        theme === "caribbeanGreen" && disabled && "bg-caribbeanGreen/50",
 
         theme === "white" &&
-          "inner-border-jaffa/50 bg-white text-caribbeanGreen inner-border hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
+          "bg-white text-caribbeanGreen inner-border inner-border-caribbeanGreen/50 hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
         theme === "white" && disabled && "text-caribbeanGreen",
 
-        theme === "oxfordBlue" &&
-          "bg-oxfordBlue text-white hover:brightness-90 active:brightness-105",
-        theme === "oxfordBlue" && disabled && "bg-oxfordBlue/80",
         className
       )}
     >
@@ -58,7 +55,8 @@ export const Button = <E extends ElementType = "button">(
           <Spinner
             className={twMerge(
               "size-4",
-              theme === "jaffa" && "stroke-white/60 text-caribbeanGreen/60"
+              theme === "caribbeanGreen" &&
+                "stroke-white/60 text-caribbeanGreen/60"
             )}
           />
         </span>

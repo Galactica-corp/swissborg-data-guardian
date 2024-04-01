@@ -3,7 +3,7 @@ import { twMerge } from "tailwind-merge";
 
 import { ClassName } from "shared/types";
 
-type Theme = "jaffa";
+type Theme = "caribbeanGreen";
 
 type Props = {
   theme?: Theme;
@@ -17,13 +17,16 @@ const spinTransition = {
 
 const animate = { rotate: 360 };
 
-export const Spinner = ({ className, theme = "jaffa" }: Props & ClassName) => {
+export const Spinner = ({
+  className,
+  theme = "caribbeanGreen",
+}: Props & ClassName) => {
   return (
     <motion.svg
       animate={animate}
       className={twMerge(
         "size-12",
-        theme === "jaffa" && "stroke-athensGray text-caribbeanGreen",
+        theme === "caribbeanGreen" && "stroke-athensGray text-caribbeanGreen",
         className
       )}
       fill="none"

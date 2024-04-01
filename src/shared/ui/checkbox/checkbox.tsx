@@ -8,7 +8,7 @@ export const Checkbox = ({ className, ...props }: Props) => {
   return (
     <div className={twMerge("relative flex w-fit", className)}>
       <input
-        className="peer relative size-5 cursor-pointer appearance-none rounded-md border-2 border-jaffa checked:border-0 checked:bg-caribbeanGreen disabled:cursor-not-allowed"
+        className="peer relative size-5 cursor-pointer appearance-none rounded-md border-2 border-caribbeanGreen checked:border-0 checked:bg-caribbeanGreen disabled:cursor-not-allowed"
         type="checkbox"
         {...props}
       />
