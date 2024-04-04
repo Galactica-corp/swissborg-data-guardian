@@ -10,7 +10,19 @@ import { Spinner } from "shared/ui/spinner";
 const modalItems: { iconName: IconName; text: string }[] = [
   {
     iconName: "userCircle",
-    text: "21 age",
+    text: "Your Name",
+  },
+  {
+    iconName: "calendar",
+    text: "Date Of Birth",
+  },
+  {
+    iconName: "planet",
+    text: "Citizenship",
+  },
+  {
+    iconName: "location",
+    text: "Postal code",
   },
 ];
 
@@ -37,7 +49,7 @@ export const CertificateGenerationContent = ({
   return (
     <>
       <header className="flex flex-col items-center justify-center">
-        <Icon className="h-6 w-9" name="userCircle" />
+        <Icon className="size-9" name="logoMark" />
         <h3 className="mt-4 text-lg font-medium">Preparing your zkKYC</h3>
         <p className="mt-1 text-sm font-light leading-5 text-fiord">
           Using KYC data provided from Swissborg
@@ -67,7 +79,7 @@ export const CertificateGenerationContent = ({
 
         <div className="flex justify-between">
           <div>
-            <h4 className="font-medium leading-6">Standard Certificate</h4>
+            <h4 className="font-medium leading-6">Standard zkKYC</h4>
             <p className="mt-0.5 font-light">
               The certificate will contain the following fields
             </p>

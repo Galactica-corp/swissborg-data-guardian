@@ -15,16 +15,16 @@ module.exports = {
       iron: "#E0E2E5",
       athensGray: "#F2F4F7",
       transparent: "transparent",
-      caribbeanGreen: {
-        DEFAULT: "#01C38D",
-        dark: "#019C71",
-      },
+      caribbeanGreen: "#0BD6A7",
       mirage: "#191E29",
     },
     extend: {
       boxShadow: {
         xs: "box-shadow: 0px 1px 2px 0px #1018280D",
       },
+    },
+    fontFamily: {
+      ttCommons: ["TT Commons"],
     },
   },
 };
