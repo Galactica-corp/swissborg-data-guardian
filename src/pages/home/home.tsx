@@ -1,4 +1,5 @@
 import { useState } from "react";
+import QRCode from "react-qr-code";
 
 import { GenerateCertificateModal } from "features/generate-certificate";
 
@@ -26,8 +27,13 @@ export const Home = () => {
               Scan QR code with your SwissBorg app to share your KYC data to
               Galactica.com
             </div>
-            <div className="my-8 self-center rounded-[10px] border border-caribbeanGreen p-4">
-              <div className="size-[200px] bg-white" onClick={handleClick} />
+            <div className="my-8 self-center rounded-[14px] border border-caribbeanGreen/50 p-4">
+              <div
+                className="rounded-[10px] bg-white p-4"
+                onClick={handleClick}
+              >
+                <QRCode size={200} value="hey" />
+              </div>
             </div>
             <div className="text-center text-sm font-medium leading-5 text-caribbeanGreen/50">
               Your private data will not be stored by Galactica.com. It will be

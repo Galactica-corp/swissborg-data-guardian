@@ -105,7 +105,7 @@ export const CertificateGenerationContent = ({
           disabled={mutation.isPending}
           onClick={handleClick}
         >
-          Generate Certificate
+          Get your zkKYC
         </Button>
       </footer>
     </>
