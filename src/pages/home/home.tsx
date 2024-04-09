@@ -2,11 +2,14 @@ import { useState } from "react";
 import QRCode from "react-qr-code";
 
 import { GenerateCertificateModal } from "features/generate-certificate";
+import { useSessionSetupQuery } from "shared/graphql";
+import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const encryptionPubKey = "1";
-  const holderCommitment = "2";
+  const query = useSessionSetupQuery();
+  console.log(query.data);
+  const { encryptionPubKey, holderCommitment } = useHolderCommitment();
 
   const handleClick = () => {
     setIsModalOpen(true);

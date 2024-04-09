@@ -1,4 +1,4 @@
-query SwissborgSessionSetup {
+query SessionSetup {
   swissborgSessionSetup {
     code
     expiresAt

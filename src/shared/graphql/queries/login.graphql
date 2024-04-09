@@ -1,0 +1,3 @@
+query Login($code: String!) {
+  swissborgLogin(code: $code)
+}

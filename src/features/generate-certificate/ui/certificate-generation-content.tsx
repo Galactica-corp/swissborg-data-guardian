@@ -1,7 +1,7 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
-import { useCreateTwitterZkCertificateMutation } from "shared/graphql";
+import { useCreateZkCertificateMutation } from "shared/graphql";
 import { Button } from "shared/ui/button";
 import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
@@ -37,12 +37,24 @@ export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
 }: Props) => {
-  // метод будет другой апи, по идее то же.
-  const mutation = useCreateTwitterZkCertificateMutation();
+  const mutation = useCreateZkCertificateMutation();
 
   const handleClick = () => {
     console.log(encryptionPubKey, holderCommitment);
 
+    mutation.mutate(
+      {
+        in: {
+          encryptionPubKey,
+          holderCommitment,
+        },
+      },
+      {
+        onSuccess: (data) => {
+          console.log(data);
+        },
+      }
+    );
     onNextStep();
   };
 

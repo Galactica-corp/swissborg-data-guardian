@@ -6,7 +6,7 @@ const env = loadEnv("development", process.cwd(), "");
 
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://occam-dataguardian.lookhere.tech/query",
+  schema: "src/shared/graphql/schema.graphql",
   documents: "src/shared/graphql/**/*.graphql",
   generates: {
     "src/shared/graphql/index.ts": {
@@ -23,6 +23,7 @@ const config: CodegenConfig = {
           endpoint: `"${env.VITE_ENDPOINT}"`,
           fetchParams: {
             headers: {
+              Accept: "application/json",
               "Content-Type": "application/json",
             },
           },
