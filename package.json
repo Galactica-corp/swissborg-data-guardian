@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "dev": "vite",
-    "build": "yarn codegen && vite build",
+    "build": "vite build",
     "build:profiler": "yarn codegen && PROFILER=true vite build",
     "preview": "vite preview",
     "lint": "eslint .",
@@ -20,6 +20,7 @@
     "@types/shallowequal": "^1.1.5",
     "framer-motion": "^11.0.22",
     "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0",
     "invariant": "^2.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

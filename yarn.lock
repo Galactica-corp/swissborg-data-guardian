@@ -7075,7 +7075,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-request@npm:^6.0.0":
+"graphql-request@npm:^6.0.0, graphql-request@npm:^6.1.0":
   version: 6.1.0
   resolution: "graphql-request@npm:6.1.0"
   dependencies:
@@ -12324,6 +12324,7 @@ __metadata:
     eslint-plugin-tailwindcss: "npm:^3.15.1"
     framer-motion: "npm:^11.0.22"
     graphql: "npm:^16.8.1"
+    graphql-request: "npm:^6.1.0"
     invariant: "npm:^2.2.4"
     postcss: "npm:^8.4.38"
     pre-commit: "npm:^1.2.2"
