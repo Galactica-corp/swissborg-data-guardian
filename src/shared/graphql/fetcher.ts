@@ -1,25 +1,17 @@
-import { GraphQLError } from "graphql";
 import { GraphQLClient, Variables, gql } from "graphql-request";
-
-interface GraphQLClientResponse<Data> {
-  status: number;
-  headers: Headers;
-  data: Data;
-  extensions?: unknown;
-  errors?: GraphQLError[];
-}
 
 const client = new GraphQLClient(
   `${import.meta.env.VITE_GRAPHQL_SERVER}/query`,
   {
     requestMiddleware: (request) => {
-      request.credentials = "include";
+      // request.credentials = "include";
+      // request.mode = "cors";
       return request;
     },
   }
 );
 
-export const graphqlRequestFetcher =
+export const fetcherFn =
   <TData, TVariables extends Variables>(
     query: string,
     variables?: TVariables,

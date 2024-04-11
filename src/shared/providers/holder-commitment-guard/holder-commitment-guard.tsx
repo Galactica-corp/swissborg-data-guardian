@@ -6,7 +6,6 @@ export const HolderCommitmentGuard = () => {
   const holderCommitmentParam = searchParams.get("holderCommitment");
   const encryptionPubKeyParam = searchParams.get("encryptionPubKey");
 
-  console.log(holderCommitmentParam, encryptionPubKeyParam);
   const savedHolderCommitment = sessionStorage.getItem("holderCommitment");
   const savedEncryptionPubKey = sessionStorage.getItem("encryptionPubKey");
 

@@ -18,9 +18,8 @@ const config: CodegenConfig = {
         avoidOptionals: true,
         constEnums: true,
         enumsAsTypes: true,
-
         fetcher: {
-          func: "./fetcher.ts#graphqlRequestFetcher",
+          func: "./fetcher.ts#fetcherFn",
           fetchParams: {
             headers: {
               Accept: "application/json",

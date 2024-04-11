@@ -40,8 +40,7 @@ export const CertificateGenerationContent = ({
   const mutation = useCreateZkCertificateMutation();
 
   const handleClick = () => {
-    console.log(encryptionPubKey, holderCommitment);
-
+    // console.log(encryptionPubKey, holderCommitment);
     mutation.mutate(
       {
         in: {
