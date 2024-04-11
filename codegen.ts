@@ -1,9 +1,5 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
-import { loadEnv } from "vite";
-
-const env = loadEnv("development", process.cwd(), "");
-
 const config: CodegenConfig = {
   overwrite: true,
   schema: "src/shared/graphql/schema.graphql",
@@ -16,11 +12,15 @@ const config: CodegenConfig = {
         "typescript-react-query",
       ],
       config: {
+        exposeQueryKeys: true,
+        addSuspenseQuery: true,
         reactQueryVersion: 5,
         avoidOptionals: true,
         constEnums: true,
+        enumsAsTypes: true,
+
         fetcher: {
-          endpoint: `"${env.VITE_ENDPOINT}"`,
+          func: "./fetcher.ts#fetcherFn",
           fetchParams: {
             headers: {
               Accept: "application/json",

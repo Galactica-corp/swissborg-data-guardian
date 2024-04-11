@@ -31,14 +31,9 @@ export default defineConfig(({ mode }) => {
           typescript: true,
         }),
     ],
+
     server: {
-      proxy: {
-        "/api": {
-          target: "https://occam-dataguardian.lookhere.tech",
-          changeOrigin: true,
-          rewrite: (path) => path.replace(/^\/api/, ""),
-        },
-      },
+      port: 8080,
     },
     resolve: {
       alias: process.env.PROFILER
