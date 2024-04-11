@@ -4,8 +4,8 @@ const client = new GraphQLClient(
   `${import.meta.env.VITE_GRAPHQL_SERVER}/query`,
   {
     requestMiddleware: (request) => {
-      request.credentials = "include";
-      request.mode = "cors";
+      // request.credentials = "include";
+      // request.mode = "cors";
       return request;
     },
   }

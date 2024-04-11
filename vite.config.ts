@@ -31,7 +31,6 @@ export default defineConfig(({ mode }) => {
           typescript: true,
         }),
     ],
-
     server: {
       port: 8080,
     },
