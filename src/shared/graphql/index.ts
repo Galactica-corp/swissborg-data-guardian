@@ -6,7 +6,7 @@ import {
   UseQueryOptions,
   UseSuspenseQueryOptions,
 } from "@tanstack/react-query";
-import { graphqlRequestFetcher } from "./fetcher.ts";
+import { fetcherFn } from "./fetcher.ts";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -135,7 +135,7 @@ export const useCreateZkCertificateMutation = <
   >({
     mutationKey: ["CreateZKCertificate"],
     mutationFn: (variables?: CreateZkCertificateMutationVariables) =>
-      graphqlRequestFetcher<
+      fetcherFn<
         CreateZkCertificateMutation,
         CreateZkCertificateMutationVariables
       >(CreateZkCertificateDocument, variables)(),
@@ -157,7 +157,7 @@ export const useLoginQuery = <TData = LoginQuery, TError = unknown>(
 ) => {
   return useQuery<LoginQuery, TError, TData>({
     queryKey: ["Login", variables],
-    queryFn: graphqlRequestFetcher<LoginQuery, LoginQueryVariables>(
+    queryFn: fetcherFn<LoginQuery, LoginQueryVariables>(
       LoginDocument,
       variables
     ),
@@ -178,7 +178,7 @@ export const useSuspenseLoginQuery = <TData = LoginQuery, TError = unknown>(
 ) => {
   return useSuspenseQuery<LoginQuery, TError, TData>({
     queryKey: ["LoginSuspense", variables],
-    queryFn: graphqlRequestFetcher<LoginQuery, LoginQueryVariables>(
+    queryFn: fetcherFn<LoginQuery, LoginQueryVariables>(
       LoginDocument,
       variables
     ),
@@ -216,10 +216,10 @@ export const useSessionSetupQuery = <
   return useQuery<SessionSetupQuery, TError, TData>({
     queryKey:
       variables === undefined ? ["SessionSetup"] : ["SessionSetup", variables],
-    queryFn: graphqlRequestFetcher<
-      SessionSetupQuery,
-      SessionSetupQueryVariables
-    >(SessionSetupDocument, variables),
+    queryFn: fetcherFn<SessionSetupQuery, SessionSetupQueryVariables>(
+      SessionSetupDocument,
+      variables
+    ),
     ...options,
   });
 };
@@ -248,10 +248,10 @@ export const useSuspenseSessionSetupQuery = <
       variables === undefined
         ? ["SessionSetupSuspense"]
         : ["SessionSetupSuspense", variables],
-    queryFn: graphqlRequestFetcher<
-      SessionSetupQuery,
-      SessionSetupQueryVariables
-    >(SessionSetupDocument, variables),
+    queryFn: fetcherFn<SessionSetupQuery, SessionSetupQueryVariables>(
+      SessionSetupDocument,
+      variables
+    ),
     ...options,
   });
 };
