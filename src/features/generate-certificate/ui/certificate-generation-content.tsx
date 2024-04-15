@@ -1,7 +1,6 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { twMerge } from "tailwind-merge";
 
-import { useCreateZkCertificateMutation } from "shared/graphql";
 import { Button } from "shared/ui/button";
 import { Checkbox } from "shared/ui/checkbox";
 import { Icon, IconName } from "shared/ui/icon";
@@ -37,24 +36,10 @@ export const CertificateGenerationContent = ({
   encryptionPubKey,
   holderCommitment,
 }: Props) => {
-  const mutation = useCreateZkCertificateMutation();
-
+  const isPending = false;
   const handleClick = () => {
-    // console.log(encryptionPubKey, holderCommitment);
-    mutation.mutate(
-      {
-        in: {
-          encryptionPubKey,
-          holderCommitment,
-        },
-      },
-      {
-        onSuccess: (data) => {
-          console.log(data);
-        },
-      }
-    );
-    onNextStep();
+    console.log(encryptionPubKey, holderCommitment);
+    // onNextStep();
   };
 
   return (
@@ -70,11 +55,11 @@ export const CertificateGenerationContent = ({
       <main
         className={twMerge(
           "relative mt-5 overflow-hidden rounded-xl border-2 border-caribbeanGreen p-5",
-          mutation.isPending && "border-caribbeanGreen/30"
+          isPending && "border-caribbeanGreen/30"
         )}
       >
         <AnimatePresence>
-          {mutation.isPending && (
+          {isPending && (
             <motion.div
               animate={{ opacity: 1, transition: { duration: 0.2 } }}
               className="absolute left-0 top-0 z-10 flex size-full flex-col items-center justify-center gap-4 bg-white"
@@ -113,7 +98,7 @@ export const CertificateGenerationContent = ({
       <footer className="mt-5 flex flex-col">
         <Button
           className="h-11 items-center justify-center text-base font-medium"
-          disabled={mutation.isPending}
+          disabled={isPending}
           onClick={handleClick}
         >
           Get your zkKYC

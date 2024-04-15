@@ -5,4 +5,4 @@ module.exports = {
   semi: true,
   endOfLine: "auto",
   tailwindFunctions: ["twMerge", "twJoin"],
-};
+}

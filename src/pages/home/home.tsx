@@ -2,13 +2,11 @@ import { useState } from "react";
 import QRCode from "react-qr-code";
 
 import { GenerateCertificateModal } from "features/generate-certificate";
-import { useSessionSetupQuery } from "shared/graphql";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const query = useSessionSetupQuery();
-  console.log(query.data);
+  const url = ""; // query.data?.swissborgSessionSetup?.url ?? "";
   const { encryptionPubKey, holderCommitment } = useHolderCommitment();
 
   const handleClick = () => {
@@ -32,10 +30,10 @@ export const Home = () => {
             </div>
             <div className="my-8 self-center rounded-[14px] border border-caribbeanGreen/50 p-4">
               <div
-                className="rounded-[10px] bg-white p-4"
+                className="size-[230px] rounded-[10px] bg-white p-4"
                 onClick={handleClick}
               >
-                <QRCode size={200} value="hey" />
+                {url ? <QRCode size={200} value={url} /> : null}
               </div>
             </div>
             <div className="text-center text-sm font-medium leading-5 text-caribbeanGreen/50">

@@ -9,24 +9,11 @@ const config: CodegenConfig = {
       plugins: [
         "typescript",
         "typescript-operations",
-        "typescript-react-query",
+        "typescript-graphql-request",
       ],
       config: {
-        exposeQueryKeys: true,
-        addSuspenseQuery: true,
-        reactQueryVersion: 5,
-        avoidOptionals: true,
         constEnums: true,
         enumsAsTypes: true,
-        fetcher: {
-          func: "./fetcher.ts#fetcherFn",
-          fetchParams: {
-            headers: {
-              Accept: "application/json",
-              "Content-Type": "application/json",
-            },
-          },
-        },
       },
     },
   },

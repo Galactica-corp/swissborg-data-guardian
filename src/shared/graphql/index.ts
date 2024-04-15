@@ -1,12 +1,5 @@
-import {
-  useMutation,
-  useQuery,
-  useSuspenseQuery,
-  UseMutationOptions,
-  UseQueryOptions,
-  UseSuspenseQueryOptions,
-} from "@tanstack/react-query";
-import { fetcherFn } from "./fetcher.ts";
+import { GraphQLClient, RequestOptions } from "graphql-request";
+import gql from "graphql-tag";
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
 export type Exact<T extends { [key: string]: unknown }> = {
@@ -27,6 +20,7 @@ export type Incremental<T> =
   | {
       [P in keyof T]?: P extends " $fragmentName" | "__typename" ? T[P] : never;
     };
+type GraphQLClientRequestHeaders = RequestOptions["requestHeaders"];
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: { input: string; output: string };
@@ -46,7 +40,7 @@ export type CreateZkCertificateIn = {
 
 export type CreateZkCertificateOut = {
   __typename?: "CreateZKCertificateOut";
-  certificate: Maybe<Scalars["String"]["output"]>;
+  certificate?: Maybe<Scalars["String"]["output"]>;
   progress: Scalars["Float"]["output"];
 };
 
@@ -85,7 +79,7 @@ export type CreateZkCertificateMutation = {
   createZKCertificate: {
     __typename?: "CreateZKCertificateOut";
     progress: number;
-    certificate: string | null;
+    certificate?: string | null;
   };
 };
 
@@ -107,158 +101,94 @@ export type SessionSetupQuery = {
   };
 };
 
-export const CreateZkCertificateDocument = `
-    mutation CreateZKCertificate($in: CreateZKCertificateIn!) {
-  createZKCertificate(in: $in) {
-    progress
-    certificate
+export const CreateZkCertificateDocument = gql`
+  mutation CreateZKCertificate($in: CreateZKCertificateIn!) {
+    createZKCertificate(in: $in) {
+      progress
+      certificate
+    }
   }
+`;
+export const LoginDocument = gql`
+  query Login($code: String!) {
+    swissborgLogin(code: $code)
+  }
+`;
+export const SessionSetupDocument = gql`
+  query SessionSetup {
+    swissborgSessionSetup {
+      code
+      expiresAt
+      url
+    }
+  }
+`;
+
+export type SdkFunctionWrapper = <T>(
+  action: (requestHeaders?: Record<string, string>) => Promise<T>,
+  operationName: string,
+  operationType?: string,
+  variables?: any
+) => Promise<T>;
+
+const defaultWrapper: SdkFunctionWrapper = (
+  action,
+  _operationName,
+  _operationType,
+  _variables
+) => action();
+
+export function getSdk(
+  client: GraphQLClient,
+  withWrapper: SdkFunctionWrapper = defaultWrapper
+) {
+  return {
+    CreateZKCertificate(
+      variables: CreateZkCertificateMutationVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<CreateZkCertificateMutation> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<CreateZkCertificateMutation>(
+            CreateZkCertificateDocument,
+            variables,
+            { ...requestHeaders, ...wrappedRequestHeaders }
+          ),
+        "CreateZKCertificate",
+        "mutation",
+        variables
+      );
+    },
+    Login(
+      variables: LoginQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<LoginQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<LoginQuery>(LoginDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "Login",
+        "query",
+        variables
+      );
+    },
+    SessionSetup(
+      variables?: SessionSetupQueryVariables,
+      requestHeaders?: GraphQLClientRequestHeaders
+    ): Promise<SessionSetupQuery> {
+      return withWrapper(
+        (wrappedRequestHeaders) =>
+          client.request<SessionSetupQuery>(SessionSetupDocument, variables, {
+            ...requestHeaders,
+            ...wrappedRequestHeaders,
+          }),
+        "SessionSetup",
+        "query",
+        variables
+      );
+    },
+  };
 }
-    `;
-
-export const useCreateZkCertificateMutation = <
-  TError = unknown,
-  TContext = unknown,
->(
-  options?: UseMutationOptions<
-    CreateZkCertificateMutation,
-    TError,
-    CreateZkCertificateMutationVariables,
-    TContext
-  >
-) => {
-  return useMutation<
-    CreateZkCertificateMutation,
-    TError,
-    CreateZkCertificateMutationVariables,
-    TContext
-  >({
-    mutationKey: ["CreateZKCertificate"],
-    mutationFn: (variables?: CreateZkCertificateMutationVariables) =>
-      fetcherFn<
-        CreateZkCertificateMutation,
-        CreateZkCertificateMutationVariables
-      >(CreateZkCertificateDocument, variables)(),
-    ...options,
-  });
-};
-
-export const LoginDocument = `
-    query Login($code: String!) {
-  swissborgLogin(code: $code)
-}
-    `;
-
-export const useLoginQuery = <TData = LoginQuery, TError = unknown>(
-  variables: LoginQueryVariables,
-  options?: Omit<UseQueryOptions<LoginQuery, TError, TData>, "queryKey"> & {
-    queryKey?: UseQueryOptions<LoginQuery, TError, TData>["queryKey"];
-  }
-) => {
-  return useQuery<LoginQuery, TError, TData>({
-    queryKey: ["Login", variables],
-    queryFn: fetcherFn<LoginQuery, LoginQueryVariables>(
-      LoginDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useLoginQuery.getKey = (variables: LoginQueryVariables) => ["Login", variables];
-
-export const useSuspenseLoginQuery = <TData = LoginQuery, TError = unknown>(
-  variables: LoginQueryVariables,
-  options?: Omit<
-    UseSuspenseQueryOptions<LoginQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseSuspenseQueryOptions<LoginQuery, TError, TData>["queryKey"];
-  }
-) => {
-  return useSuspenseQuery<LoginQuery, TError, TData>({
-    queryKey: ["LoginSuspense", variables],
-    queryFn: fetcherFn<LoginQuery, LoginQueryVariables>(
-      LoginDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useSuspenseLoginQuery.getKey = (variables: LoginQueryVariables) => [
-  "LoginSuspense",
-  variables,
-];
-
-export const SessionSetupDocument = `
-    query SessionSetup {
-  swissborgSessionSetup {
-    code
-    expiresAt
-    url
-  }
-}
-    `;
-
-export const useSessionSetupQuery = <
-  TData = SessionSetupQuery,
-  TError = unknown,
->(
-  variables?: SessionSetupQueryVariables,
-  options?: Omit<
-    UseQueryOptions<SessionSetupQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseQueryOptions<SessionSetupQuery, TError, TData>["queryKey"];
-  }
-) => {
-  return useQuery<SessionSetupQuery, TError, TData>({
-    queryKey:
-      variables === undefined ? ["SessionSetup"] : ["SessionSetup", variables],
-    queryFn: fetcherFn<SessionSetupQuery, SessionSetupQueryVariables>(
-      SessionSetupDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useSessionSetupQuery.getKey = (variables?: SessionSetupQueryVariables) =>
-  variables === undefined ? ["SessionSetup"] : ["SessionSetup", variables];
-
-export const useSuspenseSessionSetupQuery = <
-  TData = SessionSetupQuery,
-  TError = unknown,
->(
-  variables?: SessionSetupQueryVariables,
-  options?: Omit<
-    UseSuspenseQueryOptions<SessionSetupQuery, TError, TData>,
-    "queryKey"
-  > & {
-    queryKey?: UseSuspenseQueryOptions<
-      SessionSetupQuery,
-      TError,
-      TData
-    >["queryKey"];
-  }
-) => {
-  return useSuspenseQuery<SessionSetupQuery, TError, TData>({
-    queryKey:
-      variables === undefined
-        ? ["SessionSetupSuspense"]
-        : ["SessionSetupSuspense", variables],
-    queryFn: fetcherFn<SessionSetupQuery, SessionSetupQueryVariables>(
-      SessionSetupDocument,
-      variables
-    ),
-    ...options,
-  });
-};
-
-useSuspenseSessionSetupQuery.getKey = (
-  variables?: SessionSetupQueryVariables
-) =>
-  variables === undefined
-    ? ["SessionSetupSuspense"]
-    : ["SessionSetupSuspense", variables];
+export type Sdk = ReturnType<typeof getSdk>;

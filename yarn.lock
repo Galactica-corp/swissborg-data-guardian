@@ -1316,6 +1316,22 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@graphql-codegen/typescript-graphql-request@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "@graphql-codegen/typescript-graphql-request@npm:6.2.0"
+  dependencies:
+    "@graphql-codegen/plugin-helpers": "npm:^3.0.0"
+    "@graphql-codegen/visitor-plugin-common": "npm:2.13.1"
+    auto-bind: "npm:~4.0.0"
+    tslib: "npm:~2.6.0"
+  peerDependencies:
+    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
+    graphql-request: ^6.0.0
+    graphql-tag: ^2.0.0
+  checksum: 10/ed04b25544f74256f3f681961e99f424a8e409daef10b3d57f237093265aa2538453b9c88c9aabe6395558c544a260f5f9aaea3925de03bcf00f03b1850b6634
+  languageName: node
+  linkType: hard
+
 "@graphql-codegen/typescript-operations@npm:^4.2.0":
   version: 4.2.0
   resolution: "@graphql-codegen/typescript-operations@npm:4.2.0"
@@ -1328,21 +1344,6 @@ __metadata:
   peerDependencies:
     graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
   checksum: 10/a3fd0d86484f0dc952d85cdb35a2c93f27bbc9ae8ee65e3d8b35b950d024e9691a5042f58b722a798bbc2d8d9a0cef3c1a2eaf07ec6d0bbb776a31ed6e8d71f4
-  languageName: node
-  linkType: hard
-
-"@graphql-codegen/typescript-react-query@npm:^6.1.0":
-  version: 6.1.0
-  resolution: "@graphql-codegen/typescript-react-query@npm:6.1.0"
-  dependencies:
-    "@graphql-codegen/plugin-helpers": "npm:^3.0.0"
-    "@graphql-codegen/visitor-plugin-common": "npm:2.13.1"
-    auto-bind: "npm:~4.0.0"
-    change-case-all: "npm:1.0.15"
-    tslib: "npm:~2.6.0"
-  peerDependencies:
-    graphql: ^0.8.0 || ^0.9.0 || ^0.10.0 || ^0.11.0 || ^0.12.0 || ^0.13.0 || ^14.0.0 || ^15.0.0 || ^16.0.0
-  checksum: 10/9e78ba7e2a91f239eee18dd90476614f876844671a4753296d5264baf318ee18927b47a138563c93e151028a49d5e08de8b7dfc77f8ffdade4205440a0e38923
   languageName: node
   linkType: hard
 
@@ -3161,47 +3162,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@tanstack/query-core@npm:5.28.8":
-  version: 5.28.8
-  resolution: "@tanstack/query-core@npm:5.28.8"
-  checksum: 10/aeda2a4b88e3ae44d139ef9d99e09eb5bb78e39abb66cd32a21ca79e654379665ffa0c9ddd2560aeac9cbf287d648bc0ee16a4b2f45bd051d7a070d8f48912fd
-  languageName: node
-  linkType: hard
-
 "@tanstack/query-core@npm:>=5.0.0":
   version: 5.25.0
   resolution: "@tanstack/query-core@npm:5.25.0"
   checksum: 10/763f61907e279440c3cdb2af07036e0338b5f7deb302de451a535f61382e64e5c86f4c499909496d4855bb0754a84f5697bdbb8c13f15de6f8a355fa942c8b0e
-  languageName: node
-  linkType: hard
-
-"@tanstack/query-devtools@npm:5.28.6":
-  version: 5.28.6
-  resolution: "@tanstack/query-devtools@npm:5.28.6"
-  checksum: 10/7a62925752e02f136fa7163e43395086585e06261095f3dd9faca71b3304e44a18e986420b69eb24a41c91b1a73e1c31ab8303ed30e8872feed7c6c0c2bb0d1a
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query-devtools@npm:^5.28.8":
-  version: 5.28.8
-  resolution: "@tanstack/react-query-devtools@npm:5.28.8"
-  dependencies:
-    "@tanstack/query-devtools": "npm:5.28.6"
-  peerDependencies:
-    "@tanstack/react-query": ^5.28.8
-    react: ^18.0.0
-  checksum: 10/89fc0642c12f096ab60b5cd966d5f29e5f8915a2c535561cd2508f48e3a3085c3530f409609179963bebe0adb3b3ecc54d0ef36ddc3014c32ffca96da6fe52d9
-  languageName: node
-  linkType: hard
-
-"@tanstack/react-query@npm:^5.28.8":
-  version: 5.28.8
-  resolution: "@tanstack/react-query@npm:5.28.8"
-  dependencies:
-    "@tanstack/query-core": "npm:5.28.8"
-  peerDependencies:
-    react: ^18.0.0
-  checksum: 10/afb3d8652a9c68953d2283bdcfdd43ffb5dec5f2728a5a8f55000254bea4e4d3c093757c697f2ec02b6d39b83cdfd1672db2bc8447355b8e98d1d20af729bbf2
   languageName: node
   linkType: hard
 
@@ -5736,6 +5700,25 @@ __metadata:
   languageName: node
   linkType: hard
 
+"effector-react@npm:^23.2.0":
+  version: 23.2.0
+  resolution: "effector-react@npm:23.2.0"
+  dependencies:
+    use-sync-external-store: "npm:^1.0.0"
+  peerDependencies:
+    effector: ^23.0.0
+    react: ">=16.8.0 <19.0.0"
+  checksum: 10/51dd2189d5e73afa073a5cda9fb4fe2dbae8ff86e3cbe847a300df88b8731fa0e3b1f5512a21e6918c0ddacb3f3ccd88c0198bd5de22a5bb84635606a8b3a075
+  languageName: node
+  linkType: hard
+
+"effector@npm:^23.2.0":
+  version: 23.2.0
+  resolution: "effector@npm:23.2.0"
+  checksum: 10/671066fc092d2becd9c56cd73090152f057456c05cb367c4e3a49eb1c06cf122b1c2e316653fab4c438217cf95163141982f4e1ab02b216c6870b701e0879e98
+  languageName: node
+  linkType: hard
+
 "electron-to-chromium@npm:^1.4.668":
   version: 1.4.694
   resolution: "electron-to-chromium@npm:1.4.694"
@@ -7087,7 +7070,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"graphql-tag@npm:^2.11.0":
+"graphql-tag@npm:^2.11.0, graphql-tag@npm:^2.12.6":
   version: 2.12.6
   resolution: "graphql-tag@npm:2.12.6"
   dependencies:
@@ -11929,7 +11912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"use-sync-external-store@npm:1.2.0":
+"use-sync-external-store@npm:1.2.0, use-sync-external-store@npm:^1.0.0":
   version: 1.2.0
   resolution: "use-sync-external-store@npm:1.2.0"
   peerDependencies:
@@ -12297,11 +12280,9 @@ __metadata:
   dependencies:
     "@graphql-codegen/cli": "npm:5.0.2"
     "@graphql-codegen/typescript": "npm:^4.0.6"
+    "@graphql-codegen/typescript-graphql-request": "npm:^6.2.0"
     "@graphql-codegen/typescript-operations": "npm:^4.2.0"
-    "@graphql-codegen/typescript-react-query": "npm:^6.1.0"
     "@graphql-typed-document-node/core": "npm:^3.2.0"
-    "@tanstack/react-query": "npm:^5.28.8"
-    "@tanstack/react-query-devtools": "npm:^5.28.8"
     "@types/eslint": "npm:^8.56.6"
     "@types/invariant": "npm:^2.2.37"
     "@types/node": "npm:^20.11.30"
@@ -12312,6 +12293,8 @@ __metadata:
     "@typescript-eslint/parser": "npm:^7.4.0"
     "@vitejs/plugin-react-swc": "npm:^3.6.0"
     autoprefixer: "npm:^10.4.19"
+    effector: "npm:^23.2.0"
+    effector-react: "npm:^23.2.0"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-import-resolver-typescript: "npm:^3.6.1"
@@ -12325,6 +12308,7 @@ __metadata:
     framer-motion: "npm:^11.0.22"
     graphql: "npm:^16.8.1"
     graphql-request: "npm:^6.1.0"
+    graphql-tag: "npm:^2.12.6"
     invariant: "npm:^2.2.4"
     postcss: "npm:^8.4.38"
     pre-commit: "npm:^1.2.2"
