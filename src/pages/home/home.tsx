@@ -16,7 +16,7 @@ export const Home = () => {
   const { encryptionPubKey, holderCommitment } = useHolderCommitment();
 
   const handleClick = () => {
-    setIsModalOpen(true);
+    // setIsModalOpen(true);
   };
 
   return (
