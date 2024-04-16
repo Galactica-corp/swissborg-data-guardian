@@ -3,18 +3,21 @@ import { useState } from "react";
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
 
-export const GenerationSuccessContent = () => {
+export const GenerationSuccessContent = ({
+  certificateLink,
+}: {
+  certificateLink: string;
+}) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
 
   return (
     <>
       <header className="mb-5 flex flex-col items-center justify-center">
-        <Icon className="h-6 w-9" name="userCircle" />
+        <Icon className="size-9" name="logoMark" />
         <h3 className="mt-4 text-center text-lg font-medium">
-          Your KYC Certificate for Galactica.com was successfully generated
+          Your zkKYC is ready to be used. Download it and store safely
         </h3>
       </header>
-      SuccessContent
       <footer className="mt-5 flex flex-col gap-2">
         {isDownloaded ? (
           <>
@@ -36,12 +39,15 @@ export const GenerationSuccessContent = () => {
           <Button
             className="flex h-11 items-center justify-center gap-1 text-base font-medium"
             onClick={() => {
+              if (!certificateLink) return;
               setIsDownloaded(true);
+
+              window.open(certificateLink, "_blank", "noopener,noreferrer");
             }}
           >
             <Icon name="userCircle" />
-            Download{" "}
-            <span className="font-semibold text-white/50">[24.10.24]</span>
+            Download Certificate
+            <span className="font-semibold text-white/50">[dd.mm.yy]</span>
           </Button>
         )}
       </footer>

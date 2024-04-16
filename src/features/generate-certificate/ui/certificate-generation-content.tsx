@@ -26,22 +26,14 @@ const modalItems: { iconName: IconName; text: string }[] = [
 ];
 
 type Props = {
-  encryptionPubKey: string;
-  holderCommitment: string;
-  onNextStep: () => void;
+  isPending?: boolean;
+  onSubmit: () => void;
 };
 
 export const CertificateGenerationContent = ({
-  onNextStep,
-  encryptionPubKey,
-  holderCommitment,
+  onSubmit,
+  isPending = false,
 }: Props) => {
-  const isPending = false;
-  const handleClick = () => {
-    console.log(encryptionPubKey, holderCommitment);
-    // onNextStep();
-  };
-
   return (
     <>
       <header className="flex flex-col items-center justify-center">
@@ -66,9 +58,6 @@ export const CertificateGenerationContent = ({
               initial={{ opacity: 0 }}
             >
               <Spinner className="size-10" />
-              <div className="relative z-20 font-light text-oxfordBlue">
-                Sort data...
-              </div>
             </motion.div>
           )}
         </AnimatePresence>
@@ -99,9 +88,9 @@ export const CertificateGenerationContent = ({
         <Button
           className="h-11 items-center justify-center text-base font-medium"
           disabled={isPending}
-          onClick={handleClick}
+          onClick={() => onSubmit()}
         >
-          Get your zkKYC
+          {isPending ? "Generating your zkKYC..." : "Get your zkKYC"}
         </Button>
       </footer>
     </>

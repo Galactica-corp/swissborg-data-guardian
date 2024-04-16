@@ -1,12 +1,18 @@
 import { useState } from "react";
 import QRCode from "react-qr-code";
 
+import { useUnit } from "effector-react";
+
 import { GenerateCertificateModal } from "features/generate-certificate";
 import { useHolderCommitment } from "shared/providers/holder-commitment-guard";
 
+import { $$homePage } from "./model";
+
 export const Home = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const url = ""; // query.data?.swissborgSessionSetup?.url ?? "";
+  const url = useUnit($$homePage.$url);
+  const userLoggedIn = useUnit($$homePage.$userLoggedIn);
+
   const { encryptionPubKey, holderCommitment } = useHolderCommitment();
 
   const handleClick = () => {
@@ -43,13 +49,13 @@ export const Home = () => {
           </div>
         </div>
       </div>
-      {isModalOpen && (
+      {isModalOpen || userLoggedIn ? (
         <GenerateCertificateModal
           encryptionPubKey={encryptionPubKey}
           holderCommitment={holderCommitment}
           onClose={setIsModalOpen}
         />
-      )}
+      ) : null}
     </>
   );
 };
