@@ -17,10 +17,15 @@ module.exports = {
       transparent: "transparent",
       caribbeanGreen: "#0BD6A7",
       mirage: "#191E29",
+      red: "#ff5050",
+      cornFlowerBlue: "#5865F2",
     },
     extend: {
       boxShadow: {
         xs: "box-shadow: 0px 1px 2px 0px #1018280D",
+      },
+      opacity: {
+        6: "0.06",
       },
     },
     fontFamily: {

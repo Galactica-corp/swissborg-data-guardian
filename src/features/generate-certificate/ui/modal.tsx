@@ -6,6 +6,7 @@ import { Portal } from "shared/ui/portal";
 
 import { $$certificateModel } from "../model";
 import { CertificateGenerationContent } from "./certificate-generation-content";
+import { GenerationFailedContent } from "./generation-failed-content";
 import { GenerationSuccessContent } from "./generation-success-content";
 
 type Props = {
@@ -42,6 +43,7 @@ export const GenerateCertificateModal = ({
             {step === "download" && (
               <GenerationSuccessContent certificateLink={link} />
             )}
+            {step === "fail" && <GenerationFailedContent />}
           </Modal.Content>
         </Modal.Overlay>
       </Portal>

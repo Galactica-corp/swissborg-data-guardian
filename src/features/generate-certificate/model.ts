@@ -1,4 +1,5 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
+import { createApi } from "effector/effector.mjs";
 import { interval } from "patronum";
 
 import { graphqlSdk } from "shared/graphql/client";
@@ -7,13 +8,14 @@ export type HolderCommitmentProps = {
   encryptionPubKey: string;
   holderCommitment: string;
 };
-export type CertificateStep = "download" | "generation" | "idle";
+export type CertificateStep = "download" | "fail" | "generation" | "idle";
 
 const createModel = () => {
   const generateCertificate = createEvent<HolderCommitmentProps>();
   const setDone = createEvent();
 
   const $step = createStore<CertificateStep>("idle");
+
   const $certificateLink = createStore("");
   const $dataS = createStore<HolderCommitmentProps>({
     encryptionPubKey: "",
@@ -28,6 +30,13 @@ const createModel = () => {
     }
   );
 
+  const stepApi = createApi($step, {
+    idle: () => "idle",
+    fail: () => "fail",
+    generation: () => "generation",
+    download: () => "download",
+  });
+
   sample({
     source: generateCertificateFx.doneData,
     fn: (data) => data.createZKCertificate.certificate ?? "",
@@ -39,28 +48,35 @@ const createModel = () => {
     filter: (data) => data?.createZKCertificate?.progress === 100,
     target: setDone,
   });
-
+  /*
   sample({
     clock: setDone,
     fn: () => "download" as CertificateStep,
     target: $step,
   });
+  */
 
   sample({
     source: generateCertificateFx,
+    target: stepApi.generation,
+    /*
     fn: () => "generation" as CertificateStep,
     target: $step,
+    */
   });
 
+  /*
   sample({
     source: generateCertificateFx.fail,
+    target: stepApi.fail,
     fn: () => "idle" as CertificateStep,
     target: $step,
   });
+    */
 
   sample({
-    source: generateCertificateFx.fail,
-    target: setDone,
+    source: generateCertificateFx.failData,
+    target: [setDone, stepApi.fail],
   });
 
   const { tick } = interval({
