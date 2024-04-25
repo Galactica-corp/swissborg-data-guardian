@@ -47,7 +47,6 @@ export const GenerationSuccessContent = ({
           >
             <Icon name="userCircle" />
             Download Certificate
-            <span className="font-semibold text-white/50">[dd.mm.yy]</span>
           </Button>
         )}
       </footer>
