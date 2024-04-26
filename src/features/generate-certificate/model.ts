@@ -15,6 +15,7 @@ const createModel = () => {
   const setDone = createEvent();
 
   const $step = createStore<CertificateStep>("idle");
+  const $errMsg = createStore("");
 
   const $certificateLink = createStore("");
   const $dataS = createStore<HolderCommitmentProps>({
@@ -48,35 +49,23 @@ const createModel = () => {
     filter: (data) => data?.createZKCertificate?.progress === 100,
     target: setDone,
   });
-  /*
-  sample({
-    clock: setDone,
-    fn: () => "download" as CertificateStep,
-    target: $step,
-  });
-  */
 
   sample({
     source: generateCertificateFx,
     target: stepApi.generation,
-    /*
-    fn: () => "generation" as CertificateStep,
-    target: $step,
-    */
   });
-
-  /*
-  sample({
-    source: generateCertificateFx.fail,
-    target: stepApi.fail,
-    fn: () => "idle" as CertificateStep,
-    target: $step,
-  });
-    */
 
   sample({
     source: generateCertificateFx.failData,
     target: [setDone, stepApi.fail],
+  });
+
+  sample({
+    source: generateCertificateFx.failData,
+    fn: (err) => {
+      return err.message;
+    },
+    target: $errMsg,
   });
 
   const { tick } = interval({
@@ -99,6 +88,7 @@ const createModel = () => {
   return {
     $step,
     $certificateLink,
+    $errMsg,
     generateCertificate,
   };
 };

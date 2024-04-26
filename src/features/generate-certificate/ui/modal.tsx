@@ -21,6 +21,7 @@ export const GenerateCertificateModal = ({
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
   const link = useUnit($$certificateModel.$certificateLink);
+  const errMsg = useUnit($$certificateModel.$errMsg);
 
   const handleSubmit = () => {
     $$certificateModel.generateCertificate({
@@ -43,7 +44,7 @@ export const GenerateCertificateModal = ({
             {step === "download" && (
               <GenerationSuccessContent certificateLink={link} />
             )}
-            {step === "fail" && <GenerationFailedContent />}
+            {step === "fail" && <GenerationFailedContent errMsg={errMsg} />}
           </Modal.Content>
         </Modal.Overlay>
       </Portal>

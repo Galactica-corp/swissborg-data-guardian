@@ -6,7 +6,7 @@ import { ClassName, PolymorphicProps } from "shared/types";
 
 import { Spinner } from "../spinner";
 
-type Theme = "caribbeanGreen" | "white";
+type Theme = "caribbeanGreen" | "white" | "cornFlowerBlue";
 
 type Props = {
   disabled?: boolean;
@@ -47,6 +47,9 @@ export const Button = <E extends ElementType = "button">(
           "bg-white text-caribbeanGreen inner-border inner-border-caribbeanGreen/50 hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
         theme === "white" && disabled && "text-caribbeanGreen",
 
+        theme === "cornFlowerBlue" &&
+          "bg-cornFlowerBlue text-white hover:bg-cornFlowerBlue hover:brightness-110 focus:bg-cornFlowerBlue focus:brightness-90 active:brightness-90",
+        theme === "cornFlowerBlue" && disabled && "bg-caribbeanGreen/50",
         className
       )}
     >
