@@ -46,7 +46,7 @@ const createModel = () => {
   sample({
     source: generateCertificateFx.doneData,
     filter: (data) => Boolean(data?.createZKCertificate?.certificate),
-    target: setDone,
+    target: [setDone, stepApi.download],
   });
 
   sample({
