@@ -1,6 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { createApi } from "effector/effector.mjs";
-import { interval } from "patronum";
+// import { interval } from "patronum";
 
 import { graphqlSdk } from "shared/graphql/client";
 
@@ -68,22 +68,22 @@ const createModel = () => {
     target: $errMsg,
   });
 
-  const { tick } = interval({
-    timeout: 2000,
-    start: generateCertificate,
-    stop: setDone,
-  });
+  // const { tick } = interval({
+  //   timeout: 2000,
+  //   start: generateCertificate,
+  //   stop: setDone,
+  // });
 
   sample({
     clock: generateCertificate,
     target: $dataS,
   });
 
-  sample({
-    clock: tick,
-    source: $dataS,
-    target: generateCertificateFx,
-  });
+  // sample({
+  //   clock: tick,
+  //   source: $dataS,
+  //   target: generateCertificateFx,
+  // });
 
   return {
     $step,

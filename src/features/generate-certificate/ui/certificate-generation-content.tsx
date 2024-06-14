@@ -88,7 +88,7 @@ export const CertificateGenerationContent = ({
         <Button
           className="h-11 items-center justify-center text-base font-medium"
           disabled={isPending}
-          onClick={() => onSubmit()}
+          onClick={() => {} /*() => onSubmit()*/}
         >
           {isPending ? "Generating your zkKYC..." : "Get your zkKYC"}
         </Button>
