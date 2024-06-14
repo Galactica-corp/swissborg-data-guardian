@@ -39,7 +39,10 @@ export const GenerateCertificateModal = ({
               <CertificateGenerationContent onSubmit={handleSubmit} />
             )}
             {step === "generation" && (
-              <CertificateGenerationContent isPending onSubmit={handleSubmit} />
+              <CertificateGenerationContent
+                isPending
+                onSubmit={() => {} /* handleSubmit */}
+              />
             )}
             {step === "download" && (
               <GenerationSuccessContent certificate={certificate} />
