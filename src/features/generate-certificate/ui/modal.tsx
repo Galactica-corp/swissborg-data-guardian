@@ -20,7 +20,7 @@ export const GenerateCertificateModal = ({
   onClose,
 }: Props) => {
   const step = useUnit($$certificateModel.$step);
-  const link = useUnit($$certificateModel.$certificateLink);
+  const certificate = useUnit($$certificateModel.$certificate);
   const errMsg = useUnit($$certificateModel.$errMsg);
 
   const handleSubmit = () => {
@@ -42,7 +42,7 @@ export const GenerateCertificateModal = ({
               <CertificateGenerationContent isPending onSubmit={handleSubmit} />
             )}
             {step === "download" && (
-              <GenerationSuccessContent certificateLink={link} />
+              <GenerationSuccessContent certificate={certificate} />
             )}
             {step === "fail" && <GenerationFailedContent errMsg={errMsg} />}
           </Modal.Content>

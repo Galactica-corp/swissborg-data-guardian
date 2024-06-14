@@ -17,7 +17,7 @@ const createModel = () => {
   const $step = createStore<CertificateStep>("idle");
   const $errMsg = createStore("");
 
-  const $certificateLink = createStore("");
+  const $certificate = createStore("");
   const $dataS = createStore<HolderCommitmentProps>({
     encryptionPubKey: "",
     holderCommitment: "",
@@ -41,12 +41,12 @@ const createModel = () => {
   sample({
     source: generateCertificateFx.doneData,
     fn: (data) => data.createZKCertificate.certificate ?? "",
-    target: $certificateLink,
+    target: $certificate,
   });
 
   sample({
     source: generateCertificateFx.doneData,
-    filter: (data) => data?.createZKCertificate?.progress === 100,
+    filter: (data) => Boolean(data?.createZKCertificate?.certificate),
     target: setDone,
   });
 
@@ -87,7 +87,7 @@ const createModel = () => {
 
   return {
     $step,
-    $certificateLink,
+    $certificate,
     $errMsg,
     generateCertificate,
   };

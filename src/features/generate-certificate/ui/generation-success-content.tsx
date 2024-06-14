@@ -2,11 +2,12 @@ import { useState } from "react";
 
 import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
+import { downloadObjectAsJson } from "shared/utils";
 
 export const GenerationSuccessContent = ({
-  certificateLink,
+  certificate,
 }: {
-  certificateLink: string;
+  certificate: string;
 }) => {
   const [isDownloaded, setIsDownloaded] = useState(false);
 
@@ -39,10 +40,10 @@ export const GenerationSuccessContent = ({
           <Button
             className="flex h-11 items-center justify-center gap-1 text-base font-medium"
             onClick={() => {
-              if (!certificateLink) return;
-              setIsDownloaded(true);
+              if (!certificate) return;
+              downloadObjectAsJson(certificate, "swissborg-kyc");
 
-              window.open(certificateLink, "_blank", "noopener,noreferrer");
+              setIsDownloaded(true);
             }}
           >
             <Icon name="userCircle" />

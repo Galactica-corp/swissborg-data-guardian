@@ -78,7 +78,6 @@ export type CreateZkCertificateMutation = {
   __typename?: "Mutation";
   createZKCertificate: {
     __typename?: "CreateZKCertificateOut";
-    progress: number;
     certificate?: string | null;
   };
 };
@@ -104,7 +103,6 @@ export type SessionSetupQuery = {
 export const CreateZkCertificateDocument = gql`
   mutation CreateZKCertificate($in: CreateZKCertificateIn!) {
     createZKCertificate(in: $in) {
-      progress
       certificate
     }
   }
