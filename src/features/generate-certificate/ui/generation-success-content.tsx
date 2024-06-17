@@ -30,10 +30,12 @@ export const GenerationSuccessContent = ({
               Certificate downloaded
             </Button>
             <Button
+              as="a"
+              href="https://app-andromeda.galactica.com/?showWideUploading=true"
               className="flex h-11 items-center justify-center gap-1 text-base font-medium"
               theme="white"
             >
-              Upload to Wallet
+              Back to galactica
             </Button>
           </>
         ) : (
