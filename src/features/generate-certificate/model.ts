@@ -1,5 +1,6 @@
 import { createEffect, createEvent, createStore, sample } from "effector";
 import { createApi } from "effector/effector.mjs";
+import { interval } from "patronum";
 
 import { graphqlSdk } from "shared/graphql/client";
 
@@ -45,7 +46,7 @@ const createModel = () => {
 
   sample({
     source: generateCertificateFx.doneData,
-    filter: (data) => Boolean(data?.createZKCertificate?.certificate),
+    filter: (data) => Boolean(data?.createZKCertificate?.status !== "PENDING"),
     target: [setDone, stepApi.download],
   });
 
@@ -67,13 +68,19 @@ const createModel = () => {
     target: $errMsg,
   });
 
+  const { tick } = interval({
+    timeout: 2000,
+    start: generateCertificate,
+    stop: setDone,
+  });
+
   sample({
     clock: generateCertificate,
     target: $dataS,
   });
 
   sample({
-    clock: generateCertificate,
+    clock: tick,
     source: $dataS,
     target: generateCertificateFx,
   });

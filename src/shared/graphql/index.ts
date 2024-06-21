@@ -33,6 +33,8 @@ export type Scalars = {
   Time: { input: any; output: any };
 };
 
+export type CertificateStatus = "DONE" | "ERROR" | "PENDING";
+
 export type CreateZkCertificateIn = {
   encryptionPubKey: Scalars["Base64"]["input"];
   holderCommitment: Scalars["BigInt"]["input"];
@@ -41,7 +43,7 @@ export type CreateZkCertificateIn = {
 export type CreateZkCertificateOut = {
   __typename?: "CreateZKCertificateOut";
   certificate?: Maybe<Scalars["String"]["output"]>;
-  progress: Scalars["Float"]["output"];
+  status: CertificateStatus;
 };
 
 export type Mutation = {
@@ -79,6 +81,7 @@ export type CreateZkCertificateMutation = {
   createZKCertificate: {
     __typename?: "CreateZKCertificateOut";
     certificate?: string | null;
+    status: CertificateStatus;
   };
 };
 
@@ -104,6 +107,7 @@ export const CreateZkCertificateDocument = gql`
   mutation CreateZKCertificate($in: CreateZKCertificateIn!) {
     createZKCertificate(in: $in) {
       certificate
+      status
     }
   }
 `;

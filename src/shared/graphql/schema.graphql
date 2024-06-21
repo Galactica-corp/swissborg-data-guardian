@@ -28,8 +28,8 @@ input CreateZKCertificateIn {
 }
 
 type CreateZKCertificateOut {
-  progress: Float!
   certificate: String
+  status: CertificateStatus!
 }
 
 type Mutation {
@@ -48,3 +48,9 @@ type SwissborgSessionSetupOut {
 }
 
 scalar Time
+
+enum CertificateStatus {
+  PENDING
+  DONE
+  ERROR
+}
