@@ -36,7 +36,7 @@ export default defineConfig(({ mode }) => {
       proxy: {
         "/api": {
           secure: false,
-          target: "https://api-stage-swissborg.ulproto.dev",
+          target: "https://api-stage-swissborg.galactica.com",
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
           configure: (proxy, _options) => {
