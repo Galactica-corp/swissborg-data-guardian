@@ -1,1 +1,1 @@
-export { shortAddress } from "./shorten-address";
+export { shortAddress } from "./short-address";

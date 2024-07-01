@@ -1,8 +1,12 @@
 import type { CodegenConfig } from "@graphql-codegen/cli";
 
+import { loadEnv } from "vite";
+
+const env = loadEnv("production", "");
+
 const config: CodegenConfig = {
   overwrite: true,
-  schema: "https://api-stage-swissborg.galactica.com/query",
+  schema: `${env.VITE_GRAPHQL_SERVER}/query`,
   documents: "src/shared/graphql/**/*.graphql",
   generates: {
     "src/shared/graphql/index.ts": {
