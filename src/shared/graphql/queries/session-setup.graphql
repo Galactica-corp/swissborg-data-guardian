@@ -1,5 +1,5 @@
-query SessionSetup {
-  swissborgSessionSetup {
+query SessionSetup($in: SwissborgSessionSetupIn!) {
+  swissborgSessionSetup(in: $in) {
     code
     expiresAt
     url

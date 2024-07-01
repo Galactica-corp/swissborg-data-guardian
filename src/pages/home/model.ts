@@ -21,7 +21,16 @@ const createModel = () => {
   const $userLoggedIn = createStore(false);
 
   const sessionSetupFx = createEffect(async () => {
-    return await graphqlSdk.SessionSetup();
+    const searchParams = new URLSearchParams(document.location.search);
+    const holderCommitmentParam = searchParams.get("holderCommitment");
+    const encryptionPubKeyParam = searchParams.get("encryptionPubKey");
+
+    return await graphqlSdk.SessionSetup({
+      in: {
+        holderCommitment: holderCommitmentParam,
+        encryptionPubKey: encryptionPubKeyParam,
+      },
+    });
   });
 
   const loginFx = attach({

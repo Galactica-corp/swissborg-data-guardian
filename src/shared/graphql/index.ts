@@ -57,12 +57,26 @@ export type MutationCreateZkCertificateArgs = {
 
 export type Query = {
   __typename?: "Query";
+  fakeLogin: Scalars["Boolean"]["output"];
   swissborgLogin: Scalars["Boolean"]["output"];
   swissborgSessionSetup: SwissborgSessionSetupOut;
 };
 
+export type QueryFakeLoginArgs = {
+  code: Scalars["String"]["input"];
+};
+
 export type QuerySwissborgLoginArgs = {
   code: Scalars["String"]["input"];
+};
+
+export type QuerySwissborgSessionSetupArgs = {
+  in: SwissborgSessionSetupIn;
+};
+
+export type SwissborgSessionSetupIn = {
+  encryptionPubKey: Scalars["Base64"]["input"];
+  holderCommitment: Scalars["BigInt"]["input"];
 };
 
 export type SwissborgSessionSetupOut = {
@@ -91,7 +105,9 @@ export type LoginQueryVariables = Exact<{
 
 export type LoginQuery = { __typename?: "Query"; swissborgLogin: boolean };
 
-export type SessionSetupQueryVariables = Exact<{ [key: string]: never }>;
+export type SessionSetupQueryVariables = Exact<{
+  in: SwissborgSessionSetupIn;
+}>;
 
 export type SessionSetupQuery = {
   __typename?: "Query";
@@ -117,8 +133,8 @@ export const LoginDocument = gql`
   }
 `;
 export const SessionSetupDocument = gql`
-  query SessionSetup {
-    swissborgSessionSetup {
+  query SessionSetup($in: SwissborgSessionSetupIn!) {
+    swissborgSessionSetup(in: $in) {
       code
       expiresAt
       url
@@ -177,7 +193,7 @@ export function getSdk(
       );
     },
     SessionSetup(
-      variables?: SessionSetupQueryVariables,
+      variables: SessionSetupQueryVariables,
       requestHeaders?: GraphQLClientRequestHeaders
     ): Promise<SessionSetupQuery> {
       return withWrapper(
