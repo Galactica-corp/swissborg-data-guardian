@@ -14,3 +14,4 @@ dist/
 
 .env.development
 .env.local
+openapi-ts-error*

@@ -7,49 +7,72 @@ import {
 } from "effector";
 import invariant from "invariant";
 
-import { graphqlSdk } from "shared/graphql/client";
+import {
+  Approved,
+  WebAuthManagementGetSessionStatusResponse,
+  getWebSessionStatus,
+  initiateWebSession,
+} from "shared/openapi/client";
+import { client } from "shared/openapi/client";
 
 export type HomePageModel = ReturnType<typeof createModel>;
 
+// configure internal service client
+client.setConfig({
+  // set default base url for requests
+  baseUrl: `${import.meta.env.VITEFd_API_URL}/v1`,
+  // set default headers for requests
+  // headers: {
+  // 	Authorization: 'Bearer <token_from_service_client>',
+  // },
+});
+
+const secret = import.meta.env.VITE_AUTH_SECRET ?? "";
+
 const createModel = () => {
   const setupSession = createEvent();
-  const login = createEvent();
-  const setUser = createEvent<boolean>();
+  const checkStatus = createEvent();
+  // const setUser = createEvent<boolean>();
 
   const $url = createStore("");
   const $code = createStore("");
-  const $userLoggedIn = createStore(false);
+  const $sessionToken = createStore<string | undefined>(undefined);
+  const $userLoggedIn = $sessionToken.map(Boolean);
 
-  const sessionSetupFx = createEffect(async () => {
-    const searchParams = new URLSearchParams(document.location.search);
-    const holderCommitmentParam = searchParams.get("holderCommitment");
-    const encryptionPubKeyParam = searchParams.get("encryptionPubKey");
-
-    return await graphqlSdk.SessionSetup({
-      in: {
-        holderCommitment: holderCommitmentParam,
-        encryptionPubKey: encryptionPubKeyParam,
+  const sessionSetupFx = createEffect(() => {
+    return initiateWebSession({
+      body: {
+        audience: "galactica",
+        secret,
       },
     });
   });
 
-  const loginFx = attach({
+  const checkSessionStatusFx = attach({
     source: $code,
     async effect(code) {
       invariant(code, "No code has been found.");
-      return await graphqlSdk.Login({ code });
+      return getWebSessionStatus({
+        body: {
+          secret,
+        },
+        path: {
+          code,
+        },
+      });
     },
   });
 
   sample({
     source: sessionSetupFx.doneData,
-    fn: (data) => data.swissborgSessionSetup.url,
+    fn: (data) =>
+      `https://swissborg.com/wa/v1/web/login/${data.data?.code ?? ""}`,
     target: $url,
   });
 
   sample({
     source: sessionSetupFx.doneData,
-    fn: (data) => data.swissborgSessionSetup.code,
+    fn: (data) => data.data?.code ?? "",
     target: $code,
   });
 
@@ -60,29 +83,34 @@ const createModel = () => {
 
   sample({
     source: $code,
-    target: login,
+    target: checkStatus,
   });
 
   sample({
-    source: loginFx.doneData,
-    fn: (data) => data.swissborgLogin,
-    target: $userLoggedIn,
+    source: checkSessionStatusFx.doneData,
+    fn: ({ data }) => {
+      if (data && isApproved(data)) {
+        return data.approved.session_token;
+      }
+      return undefined;
+    },
+    target: $sessionToken,
   });
 
   sample({
-    clock: login,
+    clock: checkStatus,
     source: [$userLoggedIn, $code],
     filter: ([userLoggedIn, code]) => !userLoggedIn && Boolean(code),
-    target: loginFx,
+    target: checkSessionStatusFx,
   });
 
-  sample({
-    source: setUser,
-    target: $userLoggedIn,
-  });
+  // sample({
+  //   source: setUser,
+  //   target: $sessionToken,
+  // });
 
   setupSession();
-  setInterval(login, 2000);
+  setInterval(checkStatus, 2000);
 
   return {
     $url,
@@ -92,3 +120,9 @@ const createModel = () => {
 };
 
 export const { ...$$homePage } = createModel();
+
+function isApproved(
+  res: WebAuthManagementGetSessionStatusResponse
+): res is { approved: Approved } {
+  return "approved" in res;
+}

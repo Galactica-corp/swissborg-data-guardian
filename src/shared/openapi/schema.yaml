@@ -1,0 +1,259 @@
+openapi: 3.1.0
+info:
+  title: Web Authentication API
+  version: 1.182.7
+servers:
+  - url: https://api-stage.swissborg.io/v1
+    description: SwissBorg Stage API
+  - url: https://api.swissborg.io/v1
+    description: SwissBorg Production API
+paths:
+  /web-auth/session/setup:
+    post:
+      description:
+        "Initiate a Web Session flow from the given parameters:\n- The\
+        \ `audience` value is given during integration for each client.\n- A `secret`\
+        \ nonce generated randomly in the client.\n\nIn response, the flow's identifier\
+        \ `code` and its expiry are returned.\n\nThis endpoint starts the authentication\
+        \ flow as described below:\n1. Initiate the flow with a `secret`, getting\
+        \ back its `code`.\n2. Construct a universal link of the form https://swissborg.com/wa/v1/web/login/{code}\
+        \ and\nshare it with the user either as a QR code or a button.\n3. Poll the\
+        \ status endpoint to retrieve the session token, or until the deadline `expires_at`\
+        \ is reached.\n      "
+      operationId: Initiate Web Session
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebAuthManagementSetupSessionRequestBody"
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebAuthManagementSetupSessionResponse"
+        "400":
+          description: "Invalid value, Invalid value for: body"
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+  /web-auth/session/status/{code}:
+    post:
+      description:
+        "Get the Web Session flow status and its associated session token\
+        \ if successfully completed.\nA polling of 1 second should be used to get\
+        \ the latest status, until a terminal state is reached.\n      "
+      operationId: Get Web Session status
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            $ref: "#/components/schemas/WebSessionCode"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/WebAuthManagementGetSessionStatusRequestBody"
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/WebAuthManagementGetSessionStatusResponse"
+        "400":
+          description: "Invalid value for: body"
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+components:
+  schemas:
+    Approved:
+      title: Approved
+      required:
+        - code
+        - session_token
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+        session_token:
+          $ref: "#/components/schemas/JWT"
+    JWT:
+      title: JWT
+      type: string
+    NotFound:
+      title: NotFound
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+    Pending:
+      title: Pending
+      required:
+        - code
+        - expires_at
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+        expires_at:
+          type: string
+          format: date-time
+    PendingApproval:
+      title: PendingApproval
+      required:
+        - code
+        - expires_at
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+        expires_at:
+          type: string
+          format: date-time
+        device_name:
+          type: string
+    Problem:
+      title: Problem
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP response status code.
+          format: int32
+          example: 400
+        title:
+          type: string
+          description: Error short description.
+          example: Bad request.
+        detail:
+          type: string
+        instance:
+          type: string
+      description: Represents an error of the SwissBorg Rest API.
+    Rejected:
+      title: Rejected
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+    Secret:
+      title: Secret
+      type: string
+      description:
+        Secret value used to initiate and query the status of a Web Session
+        flow.
+    Timeout:
+      title: Timeout
+      required:
+        - code
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+    WebAuthClient:
+      title: WebAuthClient
+      type: string
+      description:
+        Target client to which the WebSession being setup is aimed for.
+        Partners will know this value during integration phase.
+    WebAuthManagementGetSessionStatusRequestBody:
+      title: WebAuthManagementGetSessionStatusRequestBody
+      required:
+        - secret
+      type: object
+      properties:
+        secret:
+          $ref: "#/components/schemas/Secret"
+    WebAuthManagementGetSessionStatusResponse:
+      title: WebAuthManagementGetSessionStatusResponse
+      oneOf:
+        - required:
+            - approved
+          type: object
+          properties:
+            approved:
+              $ref: "#/components/schemas/Approved"
+        - required:
+            - not_found
+          type: object
+          properties:
+            not_found:
+              $ref: "#/components/schemas/NotFound"
+        - required:
+            - pending
+          type: object
+          properties:
+            pending:
+              $ref: "#/components/schemas/Pending"
+        - required:
+            - pending_approval
+          type: object
+          properties:
+            pending_approval:
+              $ref: "#/components/schemas/PendingApproval"
+        - required:
+            - rejected
+          type: object
+          properties:
+            rejected:
+              $ref: "#/components/schemas/Rejected"
+        - required:
+            - timeout
+          type: object
+          properties:
+            timeout:
+              $ref: "#/components/schemas/Timeout"
+    WebAuthManagementSetupSessionRequestBody:
+      title: WebAuthManagementSetupSessionRequestBody
+      required:
+        - audience
+        - secret
+      type: object
+      properties:
+        audience:
+          $ref: "#/components/schemas/WebAuthClient"
+        secret:
+          $ref: "#/components/schemas/Secret"
+    WebAuthManagementSetupSessionResponse:
+      title: WebAuthManagementSetupSessionResponse
+      required:
+        - code
+        - expires_at
+      type: object
+      properties:
+        code:
+          $ref: "#/components/schemas/WebSessionCode"
+        expires_at:
+          type: string
+          format: date-time
+    WebSessionCode:
+      title: WebSessionCode
+      type: string
+      description: Web Session flow identifier.

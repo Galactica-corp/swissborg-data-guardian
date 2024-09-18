@@ -16,7 +16,12 @@ module.exports = {
     "plugin:prettier/recommended",
     "prettier",
   ],
-  ignorePatterns: ["dist", ".eslintrc.cjs", "src/shared/graphql"],
+  ignorePatterns: [
+    "dist",
+    ".eslintrc.cjs",
+    "src/shared/graphql",
+    "src/shared/openapi",
+  ],
   settings: {
     "import/resolver": {
       typescript: true,
