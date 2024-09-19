@@ -1,8 +1,15 @@
-import { createEffect, createEvent, createStore, sample } from "effector";
+import {
+  attach,
+  createEffect,
+  createEvent,
+  createStore,
+  merge,
+  sample,
+} from "effector";
 import { createApi } from "effector/effector.mjs";
 import { interval } from "patronum";
 
-import { graphqlSdk } from "shared/graphql/client";
+import { $$homePage } from "pages/home/model";
 
 export type HolderCommitmentProps = {
   encryptionPubKey: string;
@@ -11,25 +18,69 @@ export type HolderCommitmentProps = {
 export type CertificateStep = "download" | "fail" | "generation" | "idle";
 
 const createModel = () => {
-  const generateCertificate = createEvent<HolderCommitmentProps>();
+  const checkCertificateStatus = createEvent();
   const setDone = createEvent();
 
   const $step = createStore<CertificateStep>("idle");
   const $errMsg = createStore("");
-
   const $certificate = createStore("");
-  const $dataS = createStore<HolderCommitmentProps>({
-    encryptionPubKey: "",
-    holderCommitment: "",
+
+  const baseUrl = `${import.meta.env.VITE_API_URL}/v1`;
+  const headers = {
+    Accept: "application/json",
+    "Content-Type": "application/json",
+  };
+
+  const checkCertificateStatusFx = attach({
+    source: $$homePage.$sessionToken,
+    effect: async (sessionToken) => {
+      const res = await fetch(baseUrl + "/galactica/cert", {
+        mode: "no-cors",
+        cache: "no-cache",
+        headers: {
+          Authorization: `Bearer ${sessionToken}`,
+          ...headers,
+        },
+      });
+      return await res.json();
+    },
   });
 
   const generateCertificateFx = createEffect(
-    async ({ encryptionPubKey, holderCommitment }: HolderCommitmentProps) => {
-      return await graphqlSdk.CreateZKCertificate({
-        in: { encryptionPubKey, holderCommitment },
+    async ({
+      encryptionPubKey,
+      holderCommitment,
+      sessionToken,
+    }: HolderCommitmentProps & { sessionToken: string }) => {
+      const body = {
+        encryption_pub_key: encryptionPubKey,
+        holder_commitment: holderCommitment,
+      };
+      console.log("body:", body);
+      console.log("sessionToken: ", sessionToken);
+
+      const res = await fetch(baseUrl + "/galactica/cert/generate", {
+        method: "POST",
+        mode: "no-cors",
+        cache: "no-cache",
+        headers: {
+          Authorization: `Bearer ${sessionToken}`,
+          ...headers,
+        },
+        body: JSON.stringify(body),
       });
+      return await res.json();
     }
   );
+
+  const startGenCertificate = attach({
+    source: $$homePage.$sessionToken,
+    effect: generateCertificateFx,
+    mapParams: (
+      { holderCommitment, encryptionPubKey }: HolderCommitmentProps,
+      sessionToken
+    ) => ({ holderCommitment, encryptionPubKey, sessionToken }),
+  });
 
   const stepApi = createApi($step, {
     idle: () => "idle",
@@ -39,14 +90,19 @@ const createModel = () => {
   });
 
   sample({
-    source: generateCertificateFx.doneData,
-    fn: (data) => data.createZKCertificate.certificate ?? "",
+    source: checkCertificateStatus,
+    target: checkCertificateStatusFx,
+  });
+
+  sample({
+    source: checkCertificateStatusFx.doneData,
+    fn: (data) => data.certificate ?? "",
     target: $certificate,
   });
 
   sample({
-    source: generateCertificateFx.doneData,
-    filter: (data) => Boolean(data?.createZKCertificate?.status !== "PENDING"),
+    source: checkCertificateStatusFx.doneData,
+    filter: (data) => Boolean(data?.status === "DONE"),
     target: [setDone, stepApi.download],
   });
 
@@ -56,7 +112,15 @@ const createModel = () => {
   });
 
   sample({
-    source: generateCertificateFx.failData,
+    source: generateCertificateFx.doneData,
+    target: checkCertificateStatus,
+  });
+
+  sample({
+    source: merge([
+      generateCertificateFx.failData,
+      checkCertificateStatusFx.failData,
+    ]),
     target: [setDone, stepApi.fail],
   });
 
@@ -70,26 +134,20 @@ const createModel = () => {
 
   const { tick } = interval({
     timeout: 2000,
-    start: generateCertificate,
+    start: checkCertificateStatus,
     stop: setDone,
   });
 
   sample({
-    clock: generateCertificate,
-    target: $dataS,
-  });
-
-  sample({
     clock: tick,
-    source: $dataS,
-    target: generateCertificateFx,
+    target: checkCertificateStatusFx,
   });
 
   return {
     $step,
     $certificate,
     $errMsg,
-    generateCertificate,
+    generateCertificate: startGenCertificate,
   };
 };
 

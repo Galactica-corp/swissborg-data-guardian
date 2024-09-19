@@ -1,0 +1,98 @@
+openapi: 3.1.0
+info:
+  title: Galactica Integration API
+  version: 1.182.6-1.g243710e
+servers:
+  - url: https://api-stage.swissborg.io/v1
+    description: SwissBorg Stage API
+  - url: https://api.swissborg.io/v1
+    description: SwissBorg Production API
+paths:
+  /galactica/cert/generate:
+    post:
+      description: |
+        Start the generation of the ZK certificate of the authenticated user.
+
+        This endpoint only works if the user has been verified and KYC is passed.
+        It means the user must be at least tier 1 (proof of identity) in the SwissBorg platform.
+        If the user is still in onboarding, or in recovery, this endpoint will fail with a 4xx error.
+      operationId: Generate certificate
+      requestBody:
+        description: The client parameters
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/JsonObject"
+        required: true
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JsonObject"
+        "400":
+          description: "Invalid value for: body"
+          content:
+            text/plain:
+              schema:
+                type: string
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+      security:
+        - httpAuth: []
+  /galactica/cert:
+    get:
+      description: |
+        Get the certificate for the authenticated user, if any.
+      operationId: Get certificate
+      responses:
+        "200":
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/JsonObject"
+        default:
+          description: ""
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Problem"
+      security:
+        - httpAuth: []
+components:
+  schemas:
+    JsonObject:
+      title: JsonObject
+      type: object
+    Problem:
+      title: Problem
+      required:
+        - status
+        - title
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP response status code.
+          format: int32
+          example: 400
+        title:
+          type: string
+          description: Error short description.
+          example: Bad request.
+        detail:
+          type: string
+        instance:
+          type: string
+      description: Represents an error of the SwissBorg Rest API.
+  securitySchemes:
+    httpAuth:
+      type: http
+      description: JWT session token obtained from the Web Session flow.
+      scheme: bearer

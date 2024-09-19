@@ -69,7 +69,11 @@ export const CertificateGenerationContent = ({
               The certificate will contain the following fields
             </p>
           </div>
-          <Checkbox className="cursor-default" checked={true} />
+          <Checkbox
+            className="cursor-default"
+            checked={true}
+            onChange={() => {}}
+          />
         </div>
 
         <ul className="mt-5 flex flex-col gap-y-3">
