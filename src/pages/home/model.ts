@@ -8,8 +8,6 @@ import {
 import invariant from "invariant";
 
 import {
-  Approved,
-  WebAuthManagementGetSessionStatusResponse,
   getWebSessionStatus,
   initiateWebSession,
 } from "shared/openapi/session";
@@ -22,6 +20,12 @@ client.setConfig({
 });
 
 const secret = import.meta.env.VITE_AUTH_SECRET ?? "";
+
+type SessionStatusTemporaryResponse = {
+  _type: string;
+  code?: string;
+  session_token?: string;
+};
 
 const createModel = () => {
   const setupSession = createEvent();
@@ -82,8 +86,9 @@ const createModel = () => {
   sample({
     source: checkSessionStatusFx.doneData,
     fn: ({ data }) => {
-      if (data && isApproved(data)) {
-        return "session_token_data"; // data.approved.session_token;
+      const _data = data as unknown as SessionStatusTemporaryResponse;
+      if (_data && _data._type === "approved" && _data.session_token) {
+        return _data.session_token;
       }
       return "";
     },
@@ -110,8 +115,8 @@ const createModel = () => {
 
 export const { ...$$homePage } = createModel();
 
-function isApproved(
-  res: WebAuthManagementGetSessionStatusResponse
-): res is { approved: Approved } {
-  return "approved" in res;
-}
+// function isApproved(
+//   res: WebAuthManagementGetSessionStatusResponse
+// ): res is { approved: Approved } {
+//   return "approved" in res;
+// }

@@ -57,13 +57,8 @@ export type MutationCreateZkCertificateArgs = {
 
 export type Query = {
   __typename?: "Query";
-  fakeLogin: Scalars["Boolean"]["output"];
   swissborgLogin: Scalars["Boolean"]["output"];
   swissborgSessionSetup: SwissborgSessionSetupOut;
-};
-
-export type QueryFakeLoginArgs = {
-  code: Scalars["String"]["input"];
 };
 
 export type QuerySwissborgLoginArgs = {
