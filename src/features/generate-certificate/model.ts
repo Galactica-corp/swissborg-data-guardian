@@ -35,7 +35,6 @@ const createModel = () => {
     source: $$homePage.$sessionToken,
     effect: async (sessionToken) => {
       const res = await fetch(baseUrl + "/galactica/cert", {
-        mode: "no-cors",
         cache: "no-cache",
         headers: {
           Authorization: `Bearer ${sessionToken}`,
@@ -61,7 +60,6 @@ const createModel = () => {
 
       const res = await fetch(baseUrl + "/galactica/cert/generate", {
         method: "POST",
-        mode: "no-cors",
         cache: "no-cache",
         headers: {
           Authorization: `Bearer ${sessionToken}`,
