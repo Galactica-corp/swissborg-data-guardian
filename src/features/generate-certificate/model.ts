@@ -27,7 +27,6 @@ const createModel = () => {
 
   const baseUrl = `${import.meta.env.VITE_API_URL}/v1`;
   const headers = {
-    Accept: "application/json",
     "Content-Type": "application/json",
   };
 
@@ -37,6 +36,7 @@ const createModel = () => {
       const res = await fetch(baseUrl + "/galactica/cert", {
         cache: "no-cache",
         credentials: "include",
+        mode: "cors",
         headers: {
           Authorization: `Bearer ${sessionToken}`,
           ...headers,
@@ -63,6 +63,7 @@ const createModel = () => {
         method: "POST",
         cache: "no-cache",
         credentials: "include",
+        mode: "cors",
         headers: {
           Authorization: `Bearer ${sessionToken}`,
           ...headers,

@@ -2,7 +2,7 @@ import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import { checker } from "vite-plugin-checker";
 import { nodePolyfills } from "vite-plugin-node-polyfills";
-import removeConsole from "vite-plugin-remove-console";
+// import removeConsole from "vite-plugin-remove-console";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
@@ -19,7 +19,7 @@ export default defineConfig(({ mode }) => {
       svgr(),
       tsconfigPaths(),
       nodePolyfills(),
-      isProd && removeConsole(),
+      // isProd && removeConsole(),
       isDev &&
         checker({
           eslint: {
