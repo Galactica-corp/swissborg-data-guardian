@@ -52,8 +52,8 @@ const createModel = () => {
       sessionToken,
     }: HolderCommitmentProps & { sessionToken: string }) => {
       const body = {
-        encryptionPubKey,
-        holderCommitment,
+        encryption_pub_key: encryptionPubKey,
+        holder_commitment: holderCommitment,
       };
       console.log("body:", body);
       console.log("sessionToken: ", sessionToken);
