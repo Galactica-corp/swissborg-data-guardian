@@ -15,11 +15,13 @@ import { client } from "shared/openapi/session";
 
 export type HomePageModel = ReturnType<typeof createModel>;
 
-client.setConfig({
-  baseUrl: `${import.meta.env.VITE_API_URL}/v1`,
-});
-
 const secret = import.meta.env.VITE_AUTH_SECRET ?? "";
+const testSessionToken = import.meta.env.VITE_TEST_SESSION_TOKEN ?? "";
+const apiUrl = import.meta.env.VITE_API_URL;
+
+client.setConfig({
+  baseUrl: `${apiUrl}/v1`,
+});
 
 type SessionStatusTemporaryResponse = {
   _type: string;
@@ -49,6 +51,7 @@ const createModel = () => {
     source: $code,
     async effect(code) {
       invariant(code, "No code has been found.");
+
       return getWebSessionStatus({
         body: {
           secret,
@@ -89,6 +92,10 @@ const createModel = () => {
       const _data = data as unknown as SessionStatusTemporaryResponse;
       if (_data && _data._type === "approved" && _data.session_token) {
         return _data.session_token;
+      }
+
+      if (apiUrl && apiUrl.includes("stage")) {
+        return testSessionToken;
       }
       return "";
     },
