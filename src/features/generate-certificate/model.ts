@@ -95,7 +95,7 @@ const createModel = () => {
 
   sample({
     source: checkCertificateStatusFx.doneData,
-    fn: (data) => data.certificate ?? "",
+    fn: (data) => JSON.stringify(data.certificate) ?? "",
     target: $certificate,
   });
 
