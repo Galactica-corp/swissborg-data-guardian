@@ -27,7 +27,7 @@ export const GenerationSuccessContent = ({
           <>
             <Button
               as="a"
-              href="https://app-andromeda.galactica.com/?showWideUploading=true"
+              href="https://cypherbook-stage.galactica.com/my-certificates"
               className="flex h-11 items-center justify-center gap-1 text-base font-medium"
             >
               Upload to Wallet
