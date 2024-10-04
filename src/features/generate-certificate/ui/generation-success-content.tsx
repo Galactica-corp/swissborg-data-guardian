@@ -4,6 +4,8 @@ import { Button } from "shared/ui/button";
 import { Icon } from "shared/ui/icon";
 import { downloadObjectAsJson } from "shared/utils";
 
+import { Card } from "./card";
+
 export const GenerationSuccessContent = ({
   certificate,
 }: {
@@ -19,23 +21,26 @@ export const GenerationSuccessContent = ({
           Your zkKYC is ready to be used. Download it and store safely
         </h3>
       </header>
-      <footer className="mt-5 flex flex-col gap-2">
+      <Card />
+      <footer className="mt-8 flex flex-col gap-2">
         {isDownloaded ? (
           <>
-            <Button className="flex h-11 items-center justify-center gap-1 text-base font-medium ">
-              <Icon
-                name="userCircle"
-                svgClassName="stroke-current text-white/50"
-              />
-              Certificate downloaded
-            </Button>
             <Button
               as="a"
               href="https://app-andromeda.galactica.com/?showWideUploading=true"
               className="flex h-11 items-center justify-center gap-1 text-base font-medium"
+            >
+              Upload to Wallet
+            </Button>
+            <Button
+              className="flex h-11 items-center space-x-2 justify-center text-base font-medium "
               theme="white"
             >
-              Back to galactica
+              <Icon
+                name="checkCircle"
+                svgClassName="stroke-current text-caribbeanGreen/50"
+              />
+              <div> Certificate downloaded</div>
             </Button>
           </>
         ) : (
@@ -48,7 +53,7 @@ export const GenerationSuccessContent = ({
               setIsDownloaded(true);
             }}
           >
-            <Icon name="userCircle" />
+            <Icon name="fileDownload" />
             Download Certificate
           </Button>
         )}
