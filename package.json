@@ -6,7 +6,7 @@
   "scripts": {
     "preinstall": "npx only-allow yarn",
     "dev": "vite",
-    "build": "yarn codegen && vite build",
+    "build": "vite build",
     "build:profiler": "yarn codegen && PROFILER=true vite build",
     "preview": "vite preview",
     "lint": "eslint .",
