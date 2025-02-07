@@ -30,7 +30,7 @@ export const GenerationSuccessContent = ({
               href={
                 window.location.host.includes("stage")
                   ? "https://app-stage.galactica.com/my-certificates"
-                  : "https://starbase.galactica.com/my-certificates"
+                  : "https://app.galactica.com/my-certificates"
               }
               className="flex h-11 items-center justify-center gap-1 text-base font-medium"
             >
