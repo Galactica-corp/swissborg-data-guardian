@@ -17,6 +17,7 @@
   "pre-commit": "lint",
   "dependencies": {
     "@hey-api/client-fetch": "^0.3.0",
+    "@sentry/react": "^9.9.0",
     "@types/shallowequal": "^1.1.5",
     "effector": "^23.2.0",
     "effector-react": "^23.2.0",
