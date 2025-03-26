@@ -6,7 +6,7 @@ import { createRoot } from "react-dom/client";
 import { App } from "app/application";
 
 Sentry.init({
-  dsn: "https://e3e31166a5ac753015f6ca7e7774ebbd@o4505432424775680.ingest.us.sentry.io/4509044759658496",
+  dsn: "https://dccd6d6f3fafce9af77fea432e9b1042@o4505432424775680.ingest.us.sentry.io/4509044720599040",
   integrations: [
     Sentry.browserTracingIntegration({
       // Set `tracePropagationTargets` to control for which URLs distributed tracing should be enabled
