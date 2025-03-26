@@ -1,3 +1,4 @@
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import { checker } from "vite-plugin-checker";
@@ -30,6 +31,11 @@ export default defineConfig(({ mode }) => {
           },
           typescript: true,
         }),
+      sentryVitePlugin({
+        authToken: process.env.SENTRY_AUTH_TOKEN,
+        org: "occamfi",
+        project: "swissborg-data-guardian",
+      }),
     ],
     server: {
       port: 8080,
