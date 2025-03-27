@@ -14,7 +14,7 @@ Sentry.init({
     Sentry.replayIntegration(),
   ],
   tracePropagationTargets: [
-    "localhost",
+    // "localhost",
     /^https:\/\/(stage\.)?swissborg\.galactica\.com/,
   ],
   // Performance Monitoring
