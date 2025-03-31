@@ -46,6 +46,8 @@ const createModel = () => {
       if (!res.ok) {
         if (res.status === 404) {
           Sentry.captureMessage(`404 Not Found: ${res.url}`);
+        } else {
+          Sentry.captureMessage(`${res.status} ${res.statusText}: ${res.url}`);
         }
       }
 
