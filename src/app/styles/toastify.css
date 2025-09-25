@@ -1,0 +1,11 @@
+:root {
+  --toastify-toast-bd-radius: 8px;
+  --toastify-toast-min-height: 54px;
+  --toastify-color-success: var(--color-caribbeanGreen);
+  --toastify-font-family: var(--font-tt-commons);
+  --toastify-toast-shadow: 0px 18.7px 40.06px 0px #0000000d;
+}
+
+.Toastify__toast {
+  @apply text-dark border border-[#EAEAEA];
+}

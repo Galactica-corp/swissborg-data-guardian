@@ -1,26 +1,22 @@
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { twMerge } from "tailwind-merge";
-
-import { ClassName } from "shared/types";
 
 type Theme = "caribbeanGreen";
 
 type Props = {
   theme?: Theme;
+  className?: string;
 };
 
 const spinTransition = {
   duration: 0.9,
   ease: "linear",
   repeat: Infinity,
-};
+} as const;
 
 const animate = { rotate: 360 };
 
-export const Spinner = ({
-  className,
-  theme = "caribbeanGreen",
-}: Props & ClassName) => {
+export const Spinner = ({ className, theme = "caribbeanGreen" }: Props) => {
   return (
     <motion.svg
       animate={animate}

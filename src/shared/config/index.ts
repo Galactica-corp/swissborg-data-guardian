@@ -1,1 +1,1 @@
-export { supportedChains } from "./const";
+export { supportedChains } from "./networks";

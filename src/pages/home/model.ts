@@ -11,7 +11,7 @@ import {
   getWebSessionStatus,
   initiateWebSession,
 } from "shared/openapi/session";
-import { client } from "shared/openapi/session";
+import { client } from "shared/openapi/session/client.gen";
 
 export type HomePageModel = ReturnType<typeof createModel>;
 

@@ -1,7 +1,10 @@
 import { useState } from "react";
 
+import Copy from "shared/assets/svg/copy.svg?react";
+import Discord from "shared/assets/svg/discord.svg?react";
+import Fail from "shared/assets/svg/fail.svg?react";
+import LogoMark from "shared/assets/svg/logo-mark.svg?react";
 import { Button } from "shared/ui/button";
-import { Icon } from "shared/ui/icon";
 
 export const GenerationFailedContent = ({ errMsg }: { errMsg: string }) => {
   const [errDetailsOpen, setErrDetailsOpen] = useState(false);
@@ -16,33 +19,32 @@ export const GenerationFailedContent = ({ errMsg }: { errMsg: string }) => {
   return (
     <>
       <header className="mb-5 flex flex-col items-center justify-center">
-        <Icon className="size-9" name="logoMark" />
+        <LogoMark className="size-9" />
         <h3 className="mt-4 text-lg font-medium">Preparing your zkKYC</h3>
-        <p className="mt-1 text-sm font-light leading-5 text-fiord">
+        <p className="text-fiord mt-1 text-sm leading-5 font-light">
           Using KYC data provided from Swissborg
         </p>
       </header>
       <div className="mb-5">
-        <div className="rounded-xl flex flex-col justify-center items-center border-2 border-red bg-red/6 p-[20px] text-center">
-          <Icon name="fail" size="40" />
-          <div className="text-2xl my-3 w-[80%] leading-6 text-mineShaft font-medium">
+        <div className="border-red bg-red/6 flex flex-col items-center justify-center rounded-xl border-2 p-[20px] text-center">
+          <Fail name="fail" className="size-10" />
+          <div className="text-mineShaft my-3 w-[80%] text-2xl leading-6 font-medium">
             zkCertificate issue failed
           </div>
           {errDetailsOpen ? (
-            <div className="w-full max-h-[100px] overflow-hidden relative rounded-[10px] text-fiord text-xs leading-5 bg-white py-[10px] px-4 ">
-              <Icon
-                name="copy"
+            <div className="text-fiord relative max-h-[100px] w-full overflow-hidden rounded-[10px] bg-white px-4 py-[10px] text-xs leading-5">
+              <Copy
                 onClick={handleCopyClick}
-                className="absolute cursor-pointer right-[10px] top-[10px]"
+                className="absolute top-[10px] right-[10px] size-5 cursor-pointer"
               />
-              <div className="w-full max-h-[80px] overflow-scroll no-scrollbar">
+              <div className="no-scrollbar max-h-[80px] w-full overflow-scroll">
                 {errMsg}
               </div>
             </div>
           ) : null}
           {errDetailsOpen ? null : (
             <div
-              className="text-red text-sm underline underline-offset-2 cursor-pointer hover:text-red/80"
+              className="text-red hover:text-red/80 cursor-pointer text-sm underline underline-offset-2"
               onClick={() => setErrDetailsOpen(true)}
             >
               Show details
@@ -52,20 +54,20 @@ export const GenerationFailedContent = ({ errMsg }: { errMsg: string }) => {
       </div>
       <footer className="flex flex-col items-center space-y-3">
         <Button
-          theme="cornFlowerBlue"
-          className="flex w-full h-11 items-center justify-center gap-2 text-lg font-medium"
+          variant="cornFlowerBlue"
+          className="flex h-11 w-full items-center justify-center gap-2 text-lg font-medium"
           onClick={() => {
             window.open(discordLink, "_blank", "noopener,noreferrer");
           }}
         >
-          <Icon className="text-white/50" name="discord" />
+          <Discord className="size-5 text-white/50" name="discord" />
           Contact us on Discord
         </Button>
         <a
           href={galaLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-fiord text-lg leading-6 hover:text-fiord/80 font-medium"
+          className="text-fiord hover:text-fiord/80 text-lg leading-6 font-medium"
         >
           Back to Galactica
         </a>

@@ -34,7 +34,7 @@ export const GenerateCertificateModal = ({
     <Modal onClose={onClose}>
       <Portal>
         <Modal.Overlay>
-          <Modal.Content className="w-[400px] px-6 pb-6 pt-9">
+          <Modal.Content className="w-[400px] px-6 pt-9 pb-6">
             {step === "idle" && (
               <CertificateGenerationContent onSubmit={handleSubmit} />
             )}

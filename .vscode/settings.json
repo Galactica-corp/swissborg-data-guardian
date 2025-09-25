@@ -1,15 +1,18 @@
 {
-  "search.exclude": {
-    "**/.yarn": true,
-    "**/.pnp.*": true
-  },
-  "typescript.tsdk": ".yarn/sdks/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "eslint.nodePath": ".yarn/sdks",
-  "prettier.prettierPath": ".yarn/sdks/prettier/index.cjs",
   "material-icon-theme.folders.associations": {
     "entities": "base",
     "features": "plugin",
     "ui": "react-components"
-  }
+  },
+  "files.associations": {
+    "*.css": "tailwindcss"
+  },
+  "tailwindCSS.lint.cssConflict": "ignore",
+  "tailwindCSS.experimental.classRegex": [
+    "twMerge\\(\"([^\")]*)",
+    "twJoin\\(\"([^\")]*)",
+    "tw`([^`]*)",
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cn\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }

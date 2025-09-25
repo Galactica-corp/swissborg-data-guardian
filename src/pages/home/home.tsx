@@ -21,12 +21,14 @@ export const Home = () => {
 
   return (
     <>
-      <div className="relative flex min-h-full grow flex-col bg-main bg-cover bg-top bg-no-repeat px-28 pt-[18px]">
-        <div
-          className="mt-[100px] flex
-        w-[70%] flex-col justify-center self-center"
-        >
-          <div className="mb-2 text-center font-ttCommons text-7xl text-white">
+      <div
+        style={{
+          backgroundImage: "url('/assets/bg-swissborg-data-guardian.png')",
+        }}
+        className="relative flex min-h-full grow flex-col bg-cover bg-top bg-no-repeat px-28 pt-[18px]"
+      >
+        <div className="mt-[100px] flex w-[70%] flex-col justify-center self-center">
+          <div className="font-ttCommons mb-2 text-center text-7xl text-white">
             Import Swissborg KYC to Galactica.com
           </div>
           <div className="mt-6 flex w-1/3 flex-col justify-center self-center font-medium">
@@ -34,7 +36,7 @@ export const Home = () => {
               Scan QR code with your SwissBorg app to share your KYC data to
               Galactica.com
             </div>
-            <div className="my-8 self-center rounded-[14px] border border-caribbeanGreen/50 p-4">
+            <div className="border-caribbeanGreen/50 my-8 self-center rounded-[14px] border p-4">
               <div
                 className="size-[230px] rounded-[10px] bg-white p-4"
                 onClick={handleClick}
@@ -42,7 +44,7 @@ export const Home = () => {
                 {url ? <QRCode size={200} value={url} /> : null}
               </div>
             </div>
-            <div className="text-center text-sm font-medium leading-5 text-caribbeanGreen/50">
+            <div className="text-caribbeanGreen/50 text-center text-sm leading-5 font-medium">
               Your private data will not be stored by Galactica.com. It will be
               only used to issue a zkCertificate.
             </div>

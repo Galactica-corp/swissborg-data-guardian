@@ -1,13 +1,11 @@
 import { PropsWithChildren } from "react";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { twMerge } from "tailwind-merge";
 
-import { ClassName } from "shared/types";
 
-type Props = ClassName;
 
-export const Content = ({ children, className }: PropsWithChildren<Props>) => {
+export const Content = ({ children, className }: PropsWithChildren<{className?: string}>) => {
   return (
     <motion.div
       animate={{ opacity: 1 }}

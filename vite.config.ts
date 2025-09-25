@@ -1,14 +1,11 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
+import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react-swc";
 import { defineConfig } from "vite";
 import { checker } from "vite-plugin-checker";
-import { nodePolyfills } from "vite-plugin-node-polyfills";
-// import removeConsole from "vite-plugin-remove-console";
 import svgr from "vite-plugin-svgr";
 import tsconfigPaths from "vite-tsconfig-paths";
 
 export default defineConfig(({ mode }) => {
-  const isProd = mode === "production";
   const isDev = mode === "development";
 
   return {
@@ -17,28 +14,22 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       react(),
+      tailwindcss(),
       svgr(),
       tsconfigPaths(),
-      nodePolyfills(),
-      // isProd && removeConsole(),
       isDev &&
         checker({
           eslint: {
             lintCommand: 'eslint "./src/**/*.{ts,tsx}"',
+            useFlatConfig: true,
           },
           overlay: {
             initialIsOpen: false,
           },
           typescript: true,
         }),
-      sentryVitePlugin({
-        authToken: process.env.SENTRY_AUTH_TOKEN,
-        org: "occamfi",
-        project: "swissborg-data-guardian",
-      }),
     ],
     server: {
-      port: 8080,
       proxy: {
         "/api": {
           secure: false,
@@ -49,7 +40,7 @@ export default defineConfig(({ mode }) => {
             proxy.on("error", (err, _req, _res) => {
               console.log("proxy error", err);
             });
-            proxy.on("proxyReq", (proxyReq, req, _res) => {
+            proxy.on("proxyReq", (_proxyReq, req, _res) => {
               console.log(
                 "Sending Request to the Target:",
                 req.method,
@@ -66,17 +57,6 @@ export default defineConfig(({ mode }) => {
           },
         },
       },
-    },
-    resolve: {
-      alias: process.env.PROFILER
-        ? [
-            { find: /^react-dom$/, replacement: "react-dom/profiling" },
-            {
-              find: "scheduler/tracing",
-              replacement: "scheduler/tracing-profiling",
-            },
-          ]
-        : [],
     },
   };
 });

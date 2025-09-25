@@ -33,7 +33,7 @@ export const ConnectButton = ({
       className={twMerge("py-2.5 text-sm leading-6", className)}
       isLoading={isConnecting}
       onClick={onClick}
-      theme="white"
+      variant="white"
       {...props}
     >
       {(isDisconnected || isConnecting) && children}

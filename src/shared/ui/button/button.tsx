@@ -1,18 +1,65 @@
 import { ElementType, PropsWithChildren } from "react";
 
+import { cva, VariantProps } from "class-variance-authority";
 import { twMerge } from "tailwind-merge";
 
 import { ClassName, PolymorphicProps } from "shared/types";
+import { cn } from "shared/utils/cn";
 
 import { Spinner } from "../spinner";
 
-type Theme = "caribbeanGreen" | "white" | "cornFlowerBlue";
+const buttonVariants = cva(
+  [
+    "relative inline-flex outline-hidden cursor-pointer font-medium items-center justify-center rounded-lg px-4.5 py-2 text-center transition-colors select-none",
+  ],
+  {
+    variants: {
+      variant: {
+        default: [
+          "bg-caribbeanGreen hover:bg-caribbeanGreenDark focus:bg-caribbeanGreenDark text-white shadow-xs",
+        ],
+        "caribbeanGreen/10": [
+          "bg-caribbeanGreen/10 hover:bg-caribbeanGreen/20 text-caribbeanGreen border-caribbeanGreen",
+        ],
+        white: [
+          "text-fiord hover:bg-athensGray focus:bg-athensGray bg-white active:brightness-90",
+        ],
+        cornFlowerBlue: [
+          "bg-cornFlowerBlue text-white hover:brightness-110 focus:brightness-90 active:brightness-90",
+        ],
+        transparent: ["text-fiord hover:brightness-110"],
+      },
+      disabled: {
+        true: "pointer-events-none",
+        false: null,
+      },
+    },
+    compoundVariants: [
+      {
+        variant: "default",
+        disabled: true,
+        className: ["bg-caribbeanGreen/50"],
+      },
+      {
+        variant: "caribbeanGreen/10",
+        disabled: true,
+        className: "opacity-50 border-transparent",
+      },
+      { variant: "white", disabled: true, className: "text-fiord" },
+      {
+        variant: "transparent",
+        disabled: true,
+        className: "text-fiord/30",
+      },
+    ],
+  }
+);
 
 type Props = {
   disabled?: boolean;
   isLoading?: boolean;
-  theme?: Theme;
-} & ClassName;
+} & ClassName &
+  VariantProps<typeof buttonVariants>;
 
 export const Button = <E extends ElementType = "button">(
   props: PropsWithChildren<PolymorphicProps<E, Props>>
@@ -23,7 +70,7 @@ export const Button = <E extends ElementType = "button">(
     className,
     disabled = false,
     isLoading = false,
-    theme = "caribbeanGreen",
+    variant = "default",
     ...restProps
   } = props;
 
@@ -36,30 +83,14 @@ export const Button = <E extends ElementType = "button">(
   return (
     <Comp
       {...restProps}
-      className={twMerge(
-        "shadow-xs relative inline-flex cursor-pointer select-none justify-center rounded-lg px-[18px] py-2 text-center font-medium transition-colors",
-        (isLoading || disabled) && "pointer-events-none",
-        theme === "caribbeanGreen" &&
-          "bg-caribbeanGreen text-white hover:bg-caribbeanGreen hover:brightness-110 focus:bg-caribbeanGreen focus:brightness-90 active:brightness-90",
-        theme === "caribbeanGreen" && disabled && "bg-caribbeanGreen/50",
-
-        theme === "white" &&
-          "bg-white text-caribbeanGreen inner-border inner-border-caribbeanGreen/50 hover:bg-white hover:brightness-95 focus:bg-athensGray active:brightness-95",
-        theme === "white" && disabled && "text-caribbeanGreen",
-
-        theme === "cornFlowerBlue" &&
-          "bg-cornFlowerBlue text-white hover:bg-cornFlowerBlue hover:brightness-110 focus:bg-cornFlowerBlue focus:brightness-90 active:brightness-90",
-        theme === "cornFlowerBlue" && disabled && "bg-caribbeanGreen/50",
-        className
-      )}
+      className={cn(buttonVariants({ className, disabled, variant }))}
     >
       {isLoading && (
         <span className="absolute inset-0 flex items-center justify-center">
           <Spinner
             className={twMerge(
               "size-4",
-              theme === "caribbeanGreen" &&
-                "stroke-white/60 text-caribbeanGreen/60"
+              variant === "default" && "text-caribbeanGreen/60 stroke-white/60"
             )}
           />
         </span>

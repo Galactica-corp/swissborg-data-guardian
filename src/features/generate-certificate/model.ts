@@ -1,4 +1,3 @@
-import * as Sentry from "@sentry/react";
 import {
   attach,
   createEffect,
@@ -42,14 +41,6 @@ const createModel = () => {
           ...headers,
         },
       });
-
-      if (!res.ok) {
-        if (res.status === 404) {
-          Sentry.captureMessage(`404 Not Found: ${res.url}`);
-        } else {
-          Sentry.captureMessage(`${res.status} ${res.statusText}: ${res.url}`);
-        }
-      }
 
       return await res.json();
     },

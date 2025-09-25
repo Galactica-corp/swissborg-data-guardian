@@ -1,6 +1,6 @@
 import { ComponentProps } from "react";
 
-import { motion } from "framer-motion";
+import { motion } from "motion/react";
 import { twMerge } from "tailwind-merge";
 
 import { useModalContext } from "./context";

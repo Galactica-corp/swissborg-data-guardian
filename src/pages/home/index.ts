@@ -1,5 +1,1 @@
-import { lazy } from "react";
-
-export const HomePage = lazy(() =>
-  import("./home").then((module) => ({ default: module.Home }))
-);
+export {Home as HomePage} from './home'

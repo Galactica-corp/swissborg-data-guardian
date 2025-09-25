@@ -1,6 +1,6 @@
 import { PropsWithChildren, useState } from "react";
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence } from "motion/react";
 
 import { Content } from "./content";
 import { ModalContext } from "./context";

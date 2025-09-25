@@ -1,5 +1,8 @@
-import { Chain } from "viem";
-
-import { galacticaAndromeda } from "./networks/galactica-testnet";
-
-export const supportedChains: [Chain, ...Chain[]] = [galacticaAndromeda];
+export const featuresFlags = {
+  "9302": {
+    uploadCertToSnap: false,
+  },
+  "843843": {
+    uploadCertToSnap: true,
+  },
+};

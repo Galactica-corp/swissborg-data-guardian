@@ -1,4 +1,4 @@
-import { Navigate, Outlet, useSearchParams } from "react-router-dom";
+import { Navigate, Outlet, useSearchParams } from "react-router";
 
 export const HolderCommitmentGuard = () => {
   const [searchParams] = useSearchParams();
