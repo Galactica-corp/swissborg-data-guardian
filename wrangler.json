@@ -1,0 +1,28 @@
+{
+  "name": "swissborg-dataguardian-app-fe",
+  "compatibility_date": "2025-04-03",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "directory": "./dist"
+  },
+  "env": {
+    "mainnet": {
+      "name": "swissborg-dataguardian-app-fe-mainnet",
+      "vars": {
+        "VITE_API_URL": "https://api.swissborg.io",
+        "VITE_AUTH_SECRET": "",
+        "VITE_GRAPHQL_SERVER": "https://api.swissborg.io",
+        "VITE_BACK_TO_GALACTICA_URL": "https://app.galactica.com",
+        "VITE_CHAIN_ID": "613419",
+        "VITE_SNAP_ID": "npm:@galactica-net/snap",
+        "VITE_SNAP_VERSION": "1.0.2"
+      },
+      "routes": [
+        {
+          "pattern": "swissborg-mainnet.galactica.com",
+          "custom_domain": true
+        }
+      ]
+    }
+  }
+}
